@@ -132,7 +132,10 @@ export function jsonLd() {
       '@type': 'WebSite',
       '@id': `${SITE}/#site`,
       url: `${SITE}/`,
+      // Google reads these to decide the site name shown above a search result;
+      // without them it falls back to the bare domain.
       name: 'The BizChemists',
+      alternateName: ['BizChemists', 'The BizChemists Agency'],
       inLanguage: 'en',
       publisher: { '@id': `${SITE}/#org` },
     },

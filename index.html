@@ -41,7 +41,11 @@
       a pale tab strip. These are cropped to the mark and set on an ink disc, matching
       the round window the nav already uses.
     -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <!-- Google requires a square whose side is a multiple of 48, and checks
+         /favicon.ico at the domain root before it reads any of these. -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/brand/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/brand/favicon-96.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/brand/favicon-192.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />

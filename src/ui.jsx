@@ -28,7 +28,7 @@ export function Logo({ withWordmark = false, size = 'h-9 w-9', dark = false }) {
             dark ? 'text-ink' : 'text-white'
           }`}
         >
-          BizChemists
+          The BizChemists
         </span>
       )}
     </span>
