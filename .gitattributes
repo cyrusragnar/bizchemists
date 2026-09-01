@@ -1,0 +1,15 @@
+# Checked out with CRLF on Windows, these break inside the Linux container: a shell
+# script whose shebang ends in \r fails with "no such file or directory", and the
+# Apache config and PHP endpoint are no better off. Everything that the image runs
+# stays LF regardless of the machine it was cloned on.
+* text=auto eol=lf
+
+*.sh      text eol=lf
+*.conf    text eol=lf
+*.php     text eol=lf
+Dockerfile text eol=lf
+
+# Treat media as binary so Git never "fixes" line endings inside it
+*.mp4 binary
+*.jpg binary
+*.png binary
