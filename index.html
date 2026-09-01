@@ -34,8 +34,17 @@
     />
     <meta name="twitter:image" content="__SITE__/brand/hero.jpg" />
 
-    <link rel="icon" type="image/png" href="/brand/logo.png" />
-    <link rel="apple-touch-icon" href="/brand/logo.png" />
+    <!--
+      logo.png is the full lockup: the mark sits in the middle third of a 500x500
+      canvas that is 91% transparent, with chevrons out at the corners. As a favicon
+      that renders about six pixels of logo, and the white "b" disappears entirely on
+      a pale tab strip. These are cropped to the mark and set on an ink disc, matching
+      the round window the nav already uses.
+    -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/brand/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- The poster is the LCP element on every viewport; start it before the CSS resolves. -->
