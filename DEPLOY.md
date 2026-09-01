@@ -25,24 +25,42 @@ printed in build logs.
 | `SMTP_PORT` | no | Defaults to `587` (STARTTLS). |
 | `SMTP_USER` | yes | The full mailbox address. |
 | `SMTP_PASS` | yes | That mailbox's password. Secret. |
-| `SMTP_FROM` | no | Envelope sender. Defaults to `no-reply@bizchemists.com`. |
+| `SMTP_FROM` | no | Envelope sender. Must be an address the relay is allowed to send as. |
 | `CONTACT_TO` | no | Where enquiries land. Defaults to the founder address in the code. |
-| `CONTACT_FROM_DOMAIN` | no | Domain in the `From:` header. Defaults to `bizchemists.com`. |
+| `CONTACT_FROM` | no | Full address in the `From:` header. Set this when the relay will only send as its own account. |
+| `CONTACT_FROM_DOMAIN` | no | Fallback when `CONTACT_FROM` is unset; produces `no-reply@<domain>`. |
 
 Without `SMTP_HOST` the site still serves perfectly — only the form degrades, and the
 front end already falls back to a prefilled mailto when the endpoint fails.
 
-## Mail deliverability
+## Mail relay: Gmail
 
-Mail sent from a fresh server is spam until the DNS says otherwise. In Hostinger's DNS
-for `bizchemists.com`:
+The site currently relays through Gmail, which needs no DNS work — Google authenticates
+both the sending and the receiving side, so SPF, DKIM and DMARC are not required for
+this path.
 
-- **SPF** — include Hostinger's sender, e.g. `v=spf1 include:_spf.hostinger.com ~all`
-- **DKIM** — enable it on the mailbox and publish the key Hostinger gives you
-- **DMARC** — start at `v=DMARC1; p=none; rua=mailto:you@bizchemists.com`, tighten later
+```
+SMTP_HOST     smtp.gmail.com
+SMTP_PORT     587
+SMTP_USER     bizchemistsfounder@gmail.com
+SMTP_PASS     a Google App Password, not the account password
+SMTP_FROM     bizchemistsfounder@gmail.com
+CONTACT_FROM  bizchemistsfounder@gmail.com
+```
 
-Send one test enquiry through the live form and confirm it lands in the inbox rather
-than in spam. This is the single most likely thing to be quietly broken after launch.
+The App Password requires 2-Step Verification on the Google account; generate one at
+myaccount.google.com/apppasswords and paste it without spaces.
+
+`CONTACT_FROM` matters: Gmail refuses to send as an address it does not own, so a
+`From:` of `no-reply@bizchemists.com` would be rewritten or rejected. Enquiries
+therefore arrive from the Gmail address, with the sender's own address in `Reply-To`.
+
+**If you later move to a dedicated sender** (Resend, Brevo, a Hostinger mailbox) so that
+mail comes from `no-reply@bizchemists.com`, that path *does* need SPF, DKIM and DMARC
+records on the domain, or it lands in spam.
+
+Send one test enquiry through the live form and confirm it arrives. This is the single
+most likely thing to be quietly broken after launch.
 
 ## What the container does for you
 
