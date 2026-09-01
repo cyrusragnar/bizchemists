@@ -1,0 +1,19 @@
+# Build output — Coolify builds this from source
+node_modules/
+dist/
+
+# Original video masters. Not build inputs, and 7MB of binaries in every clone
+# helps nobody. Keep these somewhere you back up.
+assets-source/
+
+# Secrets never belong in the repo; Coolify injects them as environment variables
+.env
+.env.*
+!.env.example
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

@@ -1,0 +1,14 @@
+node_modules
+dist
+tests
+assets-source
+.github
+.claude
+playwright.config.js
+playwright-report
+test-results
+*.md
+.git
+.gitignore
+Dockerfile
+.dockerignore

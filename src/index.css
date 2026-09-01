@@ -1,0 +1,446 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --mx: 50vw;
+  --my: 50vh;
+}
+
+html {
+  scroll-padding-top: 88px; /* fallback for reduced-motion, where Lenis is off */
+  background: #0a0a0a;
+}
+
+/* Height of the hero's poster band. The band, the spacer that clears it and the
+   in-band heading offset all read this, so they can never drift apart. */
+:root {
+  --band-h: 38svh;
+}
+@media (max-height: 700px) {
+  :root {
+    --band-h: 27svh;
+  }
+}
+/* A tall tablet has room to spare: give the poster real presence rather than
+   leaving two large voids between the band, the stats and the bottom block. */
+@media (min-width: 640px) and (max-width: 1023.98px) and (min-height: 900px) {
+  :root {
+    --band-h: 46svh;
+  }
+}
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #ffffff;
+  overscroll-behavior-y: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- browser surfaces: things the browser would otherwise style for us ---- */
+::selection {
+  background: #c6ff4d;
+  color: #0a0a0a;
+}
+:focus-visible {
+  outline: 2px solid #c6ff4d;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+input,
+textarea {
+  caret-color: #c6ff4d;
+}
+html {
+  scrollbar-color: #23331f #0a0a0a;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #23331f;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c6ff4d;
+}
+
+/* ---- kinetic typography ---- */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.06em;
+}
+.split-word {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+/* Held down only while JS is present, so GSAP can take over on the first frame
+   instead of the page flashing its final state and then hiding it. */
+.has-js [data-split],
+.has-js [data-reveal] {
+  visibility: hidden;
+}
+
+/* Press feedback lands on pointer-down, not on release — waiting for the click to
+   acknowledge a tap is the thing that makes an interface feel dead. */
+.press {
+  transition: transform 100ms ease-out;
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* Translucent chrome, but only where the viewer actually wants translucency. */
+@media (prefers-reduced-transparency: reduce) {
+  .nav-glass {
+    background-color: #0a0a0a !important;
+    backdrop-filter: none !important;
+  }
+}
+@media (prefers-contrast: more) {
+  .nav-glass {
+    background-color: #0a0a0a !important;
+    backdrop-filter: none !important;
+    border-bottom: 1px solid #ffffff;
+  }
+  .press:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* The hero heading moves into the poster band's empty right half — but only from
+   640px up. Under that she fills too much of the width for type to sit beside her,
+   so the heading stays in flow beneath the band. Written as one explicit media query
+   because Tailwind cannot stack two breakpoint variants: `sm:max-lg:` silently drops
+   the `sm` and applies at every width below lg. */
+/* The min-height guard matters: on a landscape phone the band is ~148px tall and the
+   heading ~135px, so an in-band heading lands above the top of the screen. */
+@media (min-width: 640px) and (max-width: 1023.98px) and (min-height: 600px) {
+  .heading-in-band {
+    position: absolute;
+    right: 2rem;
+    top: calc(var(--band-h) - 2.5rem);
+    width: 48%;
+    transform: translateY(-100%);
+    font-size: clamp(1.3rem, 5.8vw, 3rem);
+  }
+  /* so the absolute heading anchors to the hero, not to this block */
+  .hero-bottom {
+    position: static;
+  }
+}
+
+/* Short viewports (landscape phones, small artifact panels) need the hero to give
+   back vertical space rather than spill past the fold. */
+@media (max-height: 700px) {
+  .hero-stats {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  .hero-bottom {
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+  }
+}
+
+/* A landscape phone gives the band barely 100px, and a centred crop of a 16:9 poster
+   at that height lands on the subject's torso. Bias the crop upward so her face
+   survives. */
+@media (max-height: 500px) {
+  .hero-poster {
+    object-position: 0% 18%;
+  }
+}
+
+/* ---- process card stack ---- */
+/* Base sticky offset for the stack; each card adds 28px per index on top of it. */
+.stack-card {
+  --stack-top: 5.5rem;
+}
+@media (min-width: 768px) {
+  .stack-card {
+    --stack-top: 7rem;
+  }
+}
+
+/* Stacked cards read as a physical pile, so they need a real drop shadow —
+   offset and blurred, sitting on the card below. */
+.stack-card {
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.06), 0 -18px 40px -12px rgba(0, 0, 0, 0.75);
+}
+
+/* The cards animate in from ±90px, which pushed the page sideways once they became
+   real cards. Clip horizontally only — `hidden` would force overflow-y to auto and
+   crop the card shadows. */
+[data-focus-wheel] {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* Service cards: the supplied card recipe, weighted for a dark ground. */
+.service-card {
+  box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.8);
+  transition:
+    border-color 300ms ease,
+    background-color 300ms ease,
+    transform 100ms ease-out;
+}
+.service-card:hover {
+  border-color: rgba(198, 255, 77, 0.45);
+  background-color: rgba(10, 10, 10, 0.7);
+}
+
+/* ---- services focus wheel ---- */
+/* The arrow marks whichever line is currently in focus. Depth (blur/scale/opacity)
+   is scrubbed per item in motion.js so it tracks distance from the screen centre. */
+.focus-arrow {
+  opacity: 0;
+  transform: translateX(-14px);
+  transition:
+    opacity 320ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-focus-item].is-focused .focus-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---- faq: horizontal sticky pile ---- */
+/* Each card sticks at its own `left`, so scrolling right pins them one by one and the
+   pile builds up on the left. Offsets and tilts are per-index constants rather than
+   random(), so the composition is the same on every load and in every screenshot. */
+.faq-rail {
+  padding: 3rem 0 5rem;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.faq-rail::-webkit-scrollbar {
+  display: none;
+}
+.faq-card {
+  position: sticky;
+  left: calc(1.25rem + var(--i) * 18px);
+  top: 0;
+  flex: 0 0 auto;
+  width: min(82vw, 460px);
+  height: 58vh;
+  min-height: 320px;
+  margin-right: 1.5rem;
+  padding-top: var(--lift, 0px);
+  transform: rotate(var(--tilt, 0deg));
+  transform-origin: center bottom;
+}
+.faq-card > div {
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.85);
+}
+/* lets the last card reach the left edge like the others */
+.faq-rail-end {
+  width: 60vw;
+}
+@media (min-width: 640px) {
+  .faq-card {
+    left: calc(2rem + var(--i) * 26px);
+  }
+}
+@media (min-width: 1024px) {
+  .faq-card {
+    left: calc(3rem + var(--i) * 34px);
+    width: min(38vw, 480px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-rail {
+    scroll-behavior: auto;
+  }
+  .faq-card {
+    transform: none;
+    padding-top: 0;
+  }
+}
+
+/* ---- selected work: a continuous 3D ring ---- */
+.work-stage {
+  --slide: min(78vw, 380px);
+  perspective: 1600px;
+  height: calc(var(--slide) + 6.5rem);
+  touch-action: pan-y;
+  cursor: grab;
+  /* The off-centre cards sit far outside the stage and would scroll the page.
+     `clip` rather than `hidden`, so the centre card's glow still spills vertically —
+     `overflow-x: hidden` would force overflow-y to auto and cut it off. */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+.work-stage:active {
+  cursor: grabbing;
+}
+.work-slide {
+  width: var(--slide);
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  text-align: left;
+  transition:
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+}
+.work-frame {
+  transition: box-shadow 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* ambient lime bloom on the card at the front */
+.work-slide.is-centre .work-frame {
+  box-shadow:
+    0 0 130px 6px rgba(198, 255, 77, 0.42),
+    0 0 46px -6px rgba(198, 255, 77, 0.5);
+}
+@media (min-width: 640px) {
+  .work-stage {
+    --slide: min(46vw, 400px);
+  }
+}
+@media (min-width: 1024px) {
+  .work-stage {
+    --slide: min(30vw, 440px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-slide {
+    transition-duration: 1ms;
+  }
+  [data-focus-item] {
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---- capability marquee ---- */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-track {
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+
+/* ---- cursor-driven effects (pointer devices only) ---- */
+@media (hover: hover) and (pointer: fine) {
+  /* Both only engage once the pointer has actually moved.
+
+     Setting this on the host alone only ever inherited down, and both the UA
+     stylesheet and Tailwind preflight set cursor:pointer directly on links and
+     buttons — a direct rule beats an inherited one, so the hand came back on every
+     control. It has to land on the elements themselves.
+
+     Hung off .cursor-live (on <html>) rather than .cursor-host, because panels are
+     portalled to <body>, outside the host, and so kept the system cursor entirely.
+
+     Text fields keep their caret: you need to see where you are typing. */
+  .cursor-live,
+  .cursor-live *:not(input):not(textarea):not(select) {
+    cursor: none;
+  }
+
+  .cursor-bloom,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    /* above the case-study panel (70) and the mobile menu (50), below the
+       preloader (100) — at 60 the panel painted over it and, with cursor:none
+       on the host, the pointer disappeared entirely */
+    z-index: 90;
+    opacity: 0;
+    will-change: transform;
+  }
+  .cursor-live .cursor-bloom,
+  .cursor-live .cursor-ring {
+    opacity: 1;
+  }
+  /* the reagent bloom: lime light lifting off a near-black ground */
+  .cursor-bloom {
+    width: 620px;
+    height: 620px;
+    margin: -310px 0 0 -310px;
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle closest-side,
+      rgba(198, 255, 77, 0.16),
+      rgba(198, 255, 77, 0.06) 45%,
+      rgba(198, 255, 77, 0) 72%
+    );
+    mix-blend-mode: screen;
+    filter: blur(26px);
+    transform: translate3d(var(--mx), var(--my), 0);
+    transition:
+      transform 620ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 400ms linear;
+  }
+  .cursor-ring {
+    width: 26px;
+    height: 26px;
+    margin: -13px 0 0 -13px;
+    border-radius: 9999px;
+    border: 1.5px solid #c6ff4d;
+    /* the ring crosses both the ivory hero and the near-black page */
+    box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.35);
+    transform: translate3d(var(--mx), var(--my), 0);
+    transition:
+      transform 130ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 260ms,
+      height 260ms,
+      margin 260ms,
+      opacity 400ms linear,
+      background-color 260ms;
+  }
+  .cursor-live:has(a:hover, button:hover, [role='button']:hover) .cursor-ring {
+    width: 54px;
+    height: 54px;
+    margin: -27px 0 0 -27px;
+    background: rgba(198, 255, 77, 0.14);
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .split-word,
+  [data-reveal] > *,
+  [data-reveal-item] {
+    filter: none !important;
+  }
+  .cursor-bloom,
+  .cursor-ring {
+    display: none;
+  }
+  .cursor-host {
+    cursor: auto;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  /* Loops stop. Press feedback, colour and opacity transitions stay — they confirm
+     an action rather than move the viewport. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
