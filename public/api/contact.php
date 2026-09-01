@@ -16,9 +16,14 @@ declare(strict_types=1);
 // ---------------------------------------------------------------- config
 // Overridable so the address is not pinned inside the image.
 define('TO_ADDRESS', getenv('CONTACT_TO') ?: 'bizchemistsfounder@gmail.com');
-// The envelope sender's domain. Never derived from the request: Host is attacker
+// The address the mail is From. Never derived from the request: Host is attacker
 // controlled, and letting it choose the From domain invites spoofing and wrecks SPF.
-define('FROM_DOMAIN', getenv('CONTACT_FROM_DOMAIN') ?: 'bizchemists.com');
+//
+// Some relays refuse to send as an address they do not own — Gmail rewrites anything
+// that is not the authenticated account — so this takes a full address, falling back
+// to no-reply@<domain> when only a domain is given.
+define('FROM_ADDRESS', getenv('CONTACT_FROM')
+    ?: 'no-reply@' . (getenv('CONTACT_FROM_DOMAIN') ?: 'bizchemists.com'));
 
 const SITE_NAME   = 'The BizChemists';
 const MAX_LEN     = ['name' => 120, 'email' => 190, 'company' => 160, 'service' => 120, 'message' => 5000];
@@ -180,7 +185,7 @@ $body = implode("\n", [
 ]);
 
 $headers = implode("\r\n", [
-    'From: ' . SITE_NAME . ' <no-reply@' . FROM_DOMAIN . '>',
+    'From: ' . SITE_NAME . ' <' . FROM_ADDRESS . '>',
     'Reply-To: ' . $safeName . ' <' . $safeEmail . '>',
     'Content-Type: text/plain; charset=utf-8',
     'MIME-Version: 1.0',
