@@ -155,10 +155,10 @@ export default function CaseStudyPage({ item }) {
 
         {next && (
           <a
-            href={`/work/${STUDIES[next.client].slug}`}
+            href={`/work/${STUDIES[next.client].slug}/`}
             onClick={(e) => {
               e.preventDefault()
-              navigate(`/work/${STUDIES[next.client].slug}`)
+              navigate(`/work/${STUDIES[next.client].slug}/`)
             }}
             className="press group mt-20 flex flex-col gap-3 border-t border-white/15 pt-10 md:mt-28"
           >

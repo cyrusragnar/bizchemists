@@ -4,7 +4,7 @@ import { STUDIES } from './content.js'
 import { navigate } from './router.js'
 
 export default function CaseStudy({ item, open, onClose, returnFocusTo }) {
-  const href = item ? '/work/' + STUDIES[item.client].slug : '/'
+  const href = item ? '/work/' + STUDIES[item.client].slug + '/' : '/'
   return (
     <Panel
       open={open}

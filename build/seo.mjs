@@ -261,7 +261,7 @@ ${w.impact ? `<section><h2>Impact</h2><p>${esc(w.impact)}</p></section>` : ''}
 
 export function studyJsonLd(w) {
   const s = STUDIES[w.client]
-  const url = `${SITE}/work/${s.slug}`
+  const url = `${SITE}/work/${s.slug}/`
   return JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
@@ -295,7 +295,7 @@ export function studyMeta(w) {
     slug: s.slug,
     title: `${w.client} — ${w.result} | The BizChemists`,
     description: desc,
-    canonical: `${SITE}/work/${s.slug}`,
+    canonical: `${SITE}/work/${s.slug}/`,
     image: `${SITE}${w.image}`,
   }
 }
@@ -304,7 +304,7 @@ export function studyMeta(w) {
 export function sitemapXml(lastmod = '2026-09-01') {
   const urls = [
     { loc: `${SITE}/`, priority: '1.0' },
-    ...WORK.map((w) => ({ loc: `${SITE}/work/${STUDIES[w.client].slug}`, priority: '0.8' })),
+    ...WORK.map((w) => ({ loc: `${SITE}/work/${STUDIES[w.client].slug}/`, priority: '0.8' })),
   ]
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
