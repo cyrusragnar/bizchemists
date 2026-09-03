@@ -29,6 +29,14 @@ html {
     --band-h: 46svh;
   }
 }
+/* A tall phone has the same problem and needs the same answer. At 38svh the band
+   ended barely a third down the screen and left roughly 250px of empty paper between
+   the stats and the bottom block. */
+@media (max-width: 639.98px) and (min-height: 760px) {
+  :root {
+    --band-h: 48svh;
+  }
+}
 body {
   margin: 0;
   background: #0a0a0a;
@@ -138,6 +146,14 @@ html {
   }
 }
 
+@media (max-width: 767.98px) {
+  .hero-stats {
+    flex: 0 0 auto;
+    padding-top: 1.75rem;
+    padding-bottom: 0;
+  }
+}
+
 /* Short viewports (landscape phones, small artifact panels) need the hero to give
    back vertical space rather than spill past the fold. */
 @media (max-height: 700px) {
@@ -240,6 +256,19 @@ html {
 }
 .faq-card > div {
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.85);
+}
+/* On a phone 58vh is taller than any answer, so justify-between pushed the question
+   and the answer to opposite ends of a mostly empty card. Let the content decide. */
+@media (max-width: 639.98px) {
+  .faq-card {
+    height: auto;
+    min-height: 0;
+  }
+  /* The rail is a flex container, so auto-height alone still stretched every card to
+     match the longest answer. Let each one end where its own answer ends. */
+  .faq-rail {
+    align-items: flex-start;
+  }
 }
 /* lets the last card reach the left edge like the others */
 .faq-rail-end {

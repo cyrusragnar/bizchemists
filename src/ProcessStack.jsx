@@ -37,7 +37,7 @@ export default function ProcessStack() {
                 key={item.step}
                 data-stack-card
                 style={{ top: `calc(var(--stack-top) + ${i * 28}px)` }}
-                className={`stack-card sticky mb-10 flex min-h-[52vh] flex-col justify-between gap-10 rounded-[10px] border p-7 sm:p-10 md:min-h-[58vh] md:p-10 ${
+                className={`stack-card sticky mb-10 flex flex-col justify-between gap-8 rounded-[10px] border p-7 sm:gap-10 sm:p-10 sm:min-h-[52vh] md:min-h-[58vh] md:p-10 ${
                   isLast ? 'border-accent bg-accent text-ink' : 'border-white/15 bg-forest text-white'
                 }`}
               >
