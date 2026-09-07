@@ -64,6 +64,26 @@ export default function WorkCarousel({ onOpen }) {
         </p>
       </div>
 
+      <div className="mt-8 flex items-center justify-center gap-6">
+        <button
+          type="button"
+          onClick={() => step(-1)}
+          aria-label="Previous project"
+          className="press flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white transition-colors duration-200 hover:border-accent hover:text-accent"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </button>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-muted">Drag to explore</p>
+        <button
+          type="button"
+          onClick={() => step(1)}
+          aria-label="Next project"
+          className="press flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white transition-colors duration-200 hover:border-accent hover:text-accent"
+        >
+          <ArrowRight className="h-5 w-5" />
+        </button>
+      </div>
+
       {/* the ring */}
       <div
         ref={stage}
@@ -118,26 +138,6 @@ export default function WorkCarousel({ onOpen }) {
             </button>
           )
         })}
-      </div>
-
-      <div className="mt-8 flex items-center justify-center gap-6">
-        <button
-          type="button"
-          onClick={() => step(-1)}
-          aria-label="Previous project"
-          className="press flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white transition-colors duration-200 hover:border-accent hover:text-accent"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </button>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-muted">Drag to explore</p>
-        <button
-          type="button"
-          onClick={() => step(1)}
-          aria-label="Next project"
-          className="press flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white transition-colors duration-200 hover:border-accent hover:text-accent"
-        >
-          <ArrowRight className="h-5 w-5" />
-        </button>
       </div>
     </div>
   )
