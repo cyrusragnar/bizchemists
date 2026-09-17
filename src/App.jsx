@@ -3,6 +3,7 @@ import Preloader from './Preloader.jsx'
 import Nav from './Nav.jsx'
 import Hero from './Hero.jsx'
 import ProcessStack from './ProcessStack.jsx'
+import BizThread from './BizThread.jsx'
 import { Contact, Faq, Marquee, Portfolio, Services, Story, Values } from './Sections.jsx'
 import CaseStudyPage from './CaseStudyPage.jsx'
 import { WORK, STUDIES } from './content.js'
@@ -108,6 +109,7 @@ export default function App() {
 
         <ProcessStack />
         <Portfolio />
+        <BizThread />
         <Values />
         <Faq />
       </main>

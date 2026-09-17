@@ -313,6 +313,35 @@ export const WORK = [
   },
 ]
 
+/* BizThread AI, the team's sister business. Lifted from bizthreadai.com — keep these
+   claims in step with that site, never ahead of it. */
+export const BIZTHREAD = {
+  url: 'https://bizthreadai.com',
+  intro: 'Our sister business — a 24/7 AI sales agent for shops that sell in the DMs.',
+  headline: 'Never lose a sale to a slow reply.',
+  body: "Buyers message several shops at once, and the first reply usually wins the sale. BizThread answers every message on Messenger, Instagram and WhatsApp in seconds, in the buyer's own language, and takes the order right in the chat — even at 2 AM.",
+  jobs: [
+    { title: 'Replies in seconds', body: 'In Bangla, English or Banglish, day or night. It reads photos and voice notes too.' },
+    { title: 'Takes the order', body: 'No forms, no links. It checks stock and confirms the order in the chat.' },
+    { title: 'Flags fraud first', body: 'Suspicious orders are caught before the courier picks up.' },
+    { title: 'Hands you the hard ones', body: 'Refunds, complaints and custom orders come to you. One click takes over any chat.' },
+  ],
+  offer: 'Free for 7 days. No card needed.',
+  // Sample data, labelled as such on the page, the same way bizthreadai.com labels it.
+  thread: {
+    name: 'Nusrat A.',
+    channel: 'Messenger',
+    time: '2:14 AM',
+    messages: [
+      { from: 'buyer', text: 'দাম কত?', lang: 'bn' },
+      { from: 'agent', text: 'Runner Low, off white. ৳4,290. Six left in size 42. Want me to hold one?' },
+      { from: 'buyer', text: 'hae, 42 ta rakhen. cod hobe?' },
+      { from: 'agent', text: 'Cash on delivery, yes. Inside Dhaka ৳60. Your order is in.' },
+    ],
+    order: 'Order 4127 · ৳4,290',
+  },
+}
+
 export const VALUES = [
   {
     title: 'Connection',
