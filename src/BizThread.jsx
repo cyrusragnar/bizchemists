@@ -72,9 +72,25 @@ export default function BizThread() {
   return (
     <Section id="bizthread">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <h2 data-split className="uppercase text-white" style={DISPLAY}>
-          BizThread AI
-        </h2>
+        {/* The mark sits beside the heading, not inside it: data-split rebuilds the
+            heading from its text and would throw an <img> away. Sized off the display
+            scale so the glyph tracks the cap height at every width. */}
+        <div className="flex items-center gap-2 md:gap-3">
+          <span data-reveal className="block shrink-0">
+            <img
+              src="/brand/bizthread-logo.png"
+              alt=""
+              aria-hidden="true"
+              width="128"
+              height="128"
+              className="block w-auto"
+              style={{ height: DISPLAY.fontSize }}
+            />
+          </span>
+          <h2 data-split className="uppercase text-white lg:whitespace-nowrap" style={DISPLAY}>
+            BizThread AI
+          </h2>
+        </div>
         <p data-reveal className="max-w-[42ch] text-sm leading-relaxed text-muted md:text-base">
           {BIZTHREAD.intro}
         </p>
