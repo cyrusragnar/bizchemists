@@ -5,7 +5,8 @@
  * src/content.js, so the page, the structured data and llms.txt cannot drift apart.
  */
 import {
-  BIZTHREAD, CONTACT, FAQ, MAILTO_CALL, PROCESS, SERVICES, STATS, STORY, STUDIES, VALUES, WORK,
+  BIZTHREAD, CONTACT, FAQ, MAILTO_CALL, PROCESS, SERVICE_LIST, SERVICE_PAGES, SERVICES, SOCIAL, STATS,
+  STORY, STUDIES, VALUES, WORK,
 } from '../src/content.js'
 
 /* One source for the production origin. Override at build time with SITE_URL so a
@@ -20,11 +21,12 @@ const esc = (v) =>
 export function staticHtml() {
   const services = SERVICES.map(
     (s) => `<article>
-<h3>${esc(s.title)}</h3>
+<h3><a href="/services/${SERVICE_PAGES[s.title].slug}/">${esc(s.title)}</a></h3>
 <p>${esc(s.body)}</p>
 <p>${esc(s.summary)}</p>
 <ul>${s.includes.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
 <p><strong>Outcome:</strong> ${esc(s.outcome)}</p>
+<p><a href="/services/${SERVICE_PAGES[s.title].slug}/">More on ${esc(s.title.toLowerCase())}</a></p>
 </article>`,
   ).join('')
 
@@ -118,6 +120,7 @@ export function jsonLd() {
       email: CONTACT.email,
       telephone: CONTACT.phoneHref.replace('tel:', ''),
       founder: { '@type': 'Person', name: 'Ibtehaz Kabir Zarif' },
+      sameAs: SOCIAL.map((s) => s.href),
       address: { '@type': 'PostalAddress', addressCountry: 'BD' },
       areaServed: ['Bangladesh', 'Malaysia', 'Worldwide'],
       slogan: 'Where brands are formulated',
@@ -219,6 +222,12 @@ that is quicker to read.
 Seven service lines. Clients take one or hand over the whole brand.
 
 ${SERVICES.map(line).join('\n')}
+
+## Service pages
+
+One page per service line, each with what is included, proof and questions.
+
+${SERVICE_LIST.map((p) => `- [${p.h1}](${SITE}/services/${p.slug}/) — ${p.metaDescription}`).join('\n')}
 
 ## Also called
 
@@ -344,6 +353,7 @@ export function studyMeta(w) {
 export function sitemapXml(lastmod = new Date().toISOString().slice(0, 10)) {
   const urls = [
     { loc: `${SITE}/`, priority: '1.0' },
+    ...SERVICE_LIST.map((p) => ({ loc: `${SITE}/services/${p.slug}/`, priority: '0.9' })),
     ...WORK.map((w) => ({ loc: `${SITE}/work/${STUDIES[w.client].slug}/`, priority: '0.8' })),
   ]
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -383,4 +393,119 @@ export function robotsTxt() {
     'Sitemap: ' + SITE + '/sitemap.xml',
     '',
   ].join('\n')
+}
+
+/* ------------------------------------------------------- service pages */
+
+/** Everything a crawler needs for one service line, without running any JavaScript. */
+export function serviceHtml(p) {
+  const s = p.service
+  const proof = p.proof.map((c) => WORK.find((w) => w.client === c)).filter(Boolean)
+  const related = p.related.map((slug) => SERVICE_LIST.find((x) => x.slug === slug)).filter(Boolean)
+  const metrics = (w) =>
+    w.metrics && w.metrics.length
+      ? ': ' + w.metrics.map(([v, l]) => `${esc(v)} ${esc(l.toLowerCase())}`).join(', ')
+      : ''
+
+  return `<div id="seo-fallback">
+<header>
+<p class="eyebrow">Service &middot; The BizChemists</p>
+<h1>${esc(p.h1)}</h1>
+<p class="lede">${esc(p.lede)}</p>
+<p><a class="cta" href="${esc(MAILTO_CALL)}">Book a call</a> &middot; <a href="/">The BizChemists</a></p>
+</header>
+
+<section>
+<h2>What is included</h2>
+<ul>${s.includes.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
+<p><strong>What you end up with:</strong> ${esc(s.outcome)}</p>
+</section>
+
+${p.sections.map((x) => `<section><h2>${esc(x.h)}</h2><p>${esc(x.p)}</p></section>`).join('')}
+
+${proof.length
+  ? `<section>
+<h2>Proof</h2>
+<ul>${proof
+      .map(
+        (w) =>
+          `<li><a href="/work/${STUDIES[w.client].slug}/">${esc(w.client)} — ${esc(w.result)}</a>${metrics(w)}</li>`,
+      )
+      .join('')}</ul>
+</section>`
+  : ''}
+
+<section>
+<h2>Questions</h2>
+<dl>${p.faqs.map((f) => `<dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd>`).join('')}</dl>
+</section>
+
+${related.length
+  ? `<section>
+<h2>Related services</h2>
+<ul>${related.map((r) => `<li><a href="/services/${r.slug}/">${esc(r.h1)}</a></li>`).join('')}</ul>
+</section>`
+  : ''}
+
+<section>
+<h2>Start this project</h2>
+<p>Tell us what you are working on. We reply within one working day.</p>
+<p><a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a> &middot; <a href="${esc(CONTACT.phoneHref)}">${esc(CONTACT.phone)}</a></p>
+</section>
+</div>`
+}
+
+export function serviceJsonLd(p) {
+  const url = `${SITE}/services/${p.slug}/`
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Service',
+        '@id': `${url}#service`,
+        name: p.h1,
+        description: p.lede,
+        serviceType: p.service.title,
+        provider: { '@id': `${SITE}/#org` },
+        areaServed: ['Bangladesh', 'Worldwide'],
+        url,
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: `${p.h1}: what is included`,
+          itemListElement: p.service.includes.map((i) => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: i },
+          })),
+        },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        mainEntity: p.faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'The BizChemists', item: `${SITE}/` },
+          { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE}/#expertise` },
+          { '@type': 'ListItem', position: 3, name: p.h1, item: url },
+        ],
+      },
+    ],
+  })
+}
+
+export function serviceMeta(p) {
+  return {
+    slug: p.slug,
+    title: p.metaTitle,
+    description: p.metaDescription,
+    canonical: `${SITE}/services/${p.slug}/`,
+    image: `${SITE}/brand/hero.jpg`,
+    imageAlt: 'The BizChemists poster: Where Brands Are Formulated.',
+  }
 }

@@ -6,7 +6,8 @@ import ProcessStack from './ProcessStack.jsx'
 import BizThread from './BizThread.jsx'
 import { Contact, Faq, Marquee, Portfolio, Services, Story, Values } from './Sections.jsx'
 import CaseStudyPage from './CaseStudyPage.jsx'
-import { WORK, STUDIES } from './content.js'
+import ServicePage from './ServicePage.jsx'
+import { WORK, STUDIES, servicePageOf } from './content.js'
 import { routeOf, usePath } from './router.js'
 import { initScrollScenes, initSmoothScroll } from './motion.js'
 
@@ -46,7 +47,9 @@ export default function App() {
   const path = usePath()
   usePointerVars()
 
-  const study = WORK.find((w) => routeOf(path) === '/work/' + STUDIES[w.client].slug)
+  const route = routeOf(path)
+  const study = WORK.find((w) => route === '/work/' + STUDIES[w.client].slug)
+  const servicePage = route.startsWith('/services/') ? servicePageOf(route.slice('/services/'.length)) : null
 
   const onPreloaderDone = useCallback(() => setLoading(false), [])
 
@@ -70,12 +73,12 @@ export default function App() {
     }
   }, [loading])
 
-  if (study) {
+  if (study || servicePage) {
     return (
       <div className="cursor-host">
         <div className="cursor-bloom" aria-hidden="true" />
         <div className="cursor-ring" aria-hidden="true" />
-        <CaseStudyPage item={study} />
+        {study ? <CaseStudyPage item={study} /> : <ServicePage page={servicePage} />}
       </div>
     )
   }

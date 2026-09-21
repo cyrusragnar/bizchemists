@@ -13,6 +13,7 @@ import {
   FOOTER_LINKS,
   MAILTO,
   SERVICES,
+  SOCIAL,
   STORY,
   VALUES,
   WORK,
@@ -352,6 +353,22 @@ export function Contact() {
             <p className="text-sm leading-relaxed text-white/60">
             A Gen Z creative marketing and branding agency. Born in Bangladesh, working globally.
           </p>
+            {/* The same three profiles the organisation schema lists, so a reader and a
+                crawler are told the same thing about where else we are. */}
+            <ul className="flex flex-wrap gap-x-5 gap-y-2">
+              {SOCIAL.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener"
+                    className="press text-sm text-white/70 transition-colors duration-200 hover:text-accent active:text-accent"
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {FOOTER_LINKS.map((col) => (

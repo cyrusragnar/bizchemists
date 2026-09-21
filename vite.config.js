@@ -7,13 +7,16 @@ import {
   jsonLd,
   llmsTxt,
   robotsTxt,
+  serviceHtml,
+  serviceJsonLd,
+  serviceMeta,
   sitemapXml,
   staticHtml,
   studyHtml,
   studyJsonLd,
   studyMeta,
 } from './build/seo.mjs'
-import { STUDIES, WORK } from './src/content.js'
+import { SERVICE_LIST, WORK } from './src/content.js'
 
 const attr = (v) => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;')
 
@@ -60,14 +63,18 @@ const seo = () => {
     const script = built.match(/<script type="module"[^>]*><\/script>/)?.[0]
     const styles = built.match(/<link rel="stylesheet"[^>]*href="\/assets\/[^"]*"[^>]*>/)?.[0] ?? ''
     if (!script) {
-      this.warn('no built script tag found — case study pages were not emitted')
+      this.warn('no built script tag found — case study and service pages were not emitted')
       return
     }
 
     const template = readFileSync('index.html', 'utf8')
 
-    for (const w of WORK) {
-      const meta = studyMeta(w)
+    const pages = [
+      ...WORK.map((w) => ({ meta: studyMeta(w), jsonld: studyJsonLd(w), body: studyHtml(w), dir: 'work', type: 'article' })),
+      ...SERVICE_LIST.map((p) => ({ meta: serviceMeta(p), jsonld: serviceJsonLd(p), body: serviceHtml(p), dir: 'services', type: 'website' })),
+    ]
+
+    for (const { meta, jsonld, body, dir, type } of pages) {
       let page = template
         .replaceAll('__SITE__', SITE)
         .replace(/<title>[\s\S]*?<\/title>/, `<title>${attr(meta.title)}</title>`)
@@ -78,19 +85,19 @@ const seo = () => {
       page = setMeta(page, 'property', 'og:description', meta.description)
       page = setMeta(page, 'property', 'og:image', meta.image)
       page = setMeta(page, 'property', 'og:image:alt', meta.imageAlt)
-      page = setMeta(page, 'property', 'og:type', 'article')
+      page = setMeta(page, 'property', 'og:type', type)
       page = setMeta(page, 'name', 'twitter:title', meta.title)
       page = setMeta(page, 'name', 'twitter:description', meta.description)
       page = setMeta(page, 'name', 'twitter:image', meta.image)
       page = page
-        .replace('<!--seo:jsonld-->', `<script type="application/ld+json">${studyJsonLd(w)}</script>`)
-        .replace('<!--seo:content-->', studyHtml(w))
+        .replace('<!--seo:jsonld-->', `<script type="application/ld+json">${jsonld}</script>`)
+        .replace('<!--seo:content-->', body)
         .replace('<script type="module" src="/src/main.jsx"></script>', script)
         // the hero poster is preloaded for the homepage; a case study never shows it
         .replace(/\n\s*<link rel="preload" as="image"[^>]*>/, '')
         .replace('</head>', `${styles}\n  </head>`)
 
-      const out = join(outDir, 'work', STUDIES[w.client].slug, 'index.html')
+      const out = join(outDir, dir, meta.slug, 'index.html')
       mkdirSync(dirname(out), { recursive: true })
       writeFileSync(out, page)
     }

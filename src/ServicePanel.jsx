@@ -1,8 +1,12 @@
+import { ArrowUpRight } from 'lucide-react'
 import Panel from './Panel.jsx'
 import ContactForm from './ContactForm.jsx'
-import { CONTACT } from './content.js'
+import { CONTACT, SERVICE_PAGES } from './content.js'
+import { navigate } from './router.js'
 
 export default function ServicePanel({ item, open, onClose, returnFocusTo }) {
+  const page = item ? SERVICE_PAGES[item.title] : null
+  const href = page ? `/services/${page.slug}/` : '/'
   return (
     <Panel
       open={open}
@@ -47,6 +51,23 @@ export default function ServicePanel({ item, open, onClose, returnFocusTo }) {
                 ))}
               </ul>
             </section>
+
+            {page && (
+              <a
+                href={href}
+                onClick={(e) => {
+                  e.preventDefault()
+                  navigate(href)
+                }}
+                className="press group flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-accent"
+              >
+                Read the full {page.h1} page
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </a>
+            )}
 
             <section className="border-l-2 border-accent pl-5">
               <h3 className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
