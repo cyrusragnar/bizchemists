@@ -5,7 +5,7 @@
  * src/content.js, so the page, the structured data and llms.txt cannot drift apart.
  */
 import {
-  CONTACT, FAQ, MAILTO_CALL, PROCESS, SERVICES, STATS, STORY, STUDIES, VALUES, WORK,
+  BIZTHREAD, CONTACT, FAQ, MAILTO_CALL, PROCESS, SERVICES, STATS, STORY, STUDIES, VALUES, WORK,
 } from '../src/content.js'
 
 /* One source for the production origin. Override at build time with SITE_URL so a
@@ -29,16 +29,18 @@ export function staticHtml() {
   ).join('')
 
   const work = WORK.map((w) => {
+    const url = `/work/${STUDIES[w.client].slug}/`
     const metrics = w.metrics
       ? `<ul>${w.metrics.map(([v, l]) => `<li><strong>${esc(v)}</strong> ${esc(l)}</li>`).join('')}</ul>`
       : ''
     const impact = w.impact ? `<p>${esc(w.impact)}</p>` : ''
     return `<article>
-<h3>${esc(w.client)} — ${esc(w.result)}</h3>
+<h3><a href="${url}">${esc(w.client)} — ${esc(w.result)}</a></h3>
 <p>${esc(w.overview.body)}</p>
 ${metrics}
 <ul>${w.approach.items.map(([t, d]) => `<li><strong>${esc(t)}:</strong> ${esc(d)}</li>`).join('')}</ul>
 ${impact}
+<p><a href="${url}">Read the ${esc(w.client)} case study</a></p>
 </article>`
   }).join('')
 
@@ -84,6 +86,14 @@ ${work}
 </section>
 
 <section>
+<h2>BizThread AI — our sister business</h2>
+<p>${esc(BIZTHREAD.intro)}</p>
+<p><strong>${esc(BIZTHREAD.headline)}</strong> ${esc(BIZTHREAD.body)}</p>
+<ul>${BIZTHREAD.jobs.map((j) => `<li><strong>${esc(j.title)}:</strong> ${esc(j.body)}</li>`).join('')}</ul>
+<p><a href="${esc(BIZTHREAD.url)}">Visit BizThread AI</a> — ${esc(BIZTHREAD.offer)}</p>
+</section>
+
+<section>
 <h2>Contact The BizChemists</h2>
 <p><a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a> · <a href="${esc(CONTACT.phoneHref)}">${esc(CONTACT.phone)}</a></p>
 <p>Founder: Ibtehaz Kabir Zarif. Based in Bangladesh, working with clients worldwide.</p>
@@ -117,6 +127,10 @@ export function jsonLd() {
         'Branding agency',
         'Youth-led marketing agency',
         'Marketing agency in Bangladesh',
+        'Digital marketing agency',
+        'Video editing and video production',
+        'Social media marketing and management',
+        'Logo and identity design',
         ...SERVICES.map((s) => s.title),
       ],
       hasOfferCatalog: {
@@ -147,6 +161,13 @@ export function jsonLd() {
         name: f.q,
         acceptedAnswer: { '@type': 'Answer', text: f.a },
       })),
+    },
+    {
+      '@type': 'Organization',
+      '@id': 'https://bizthreadai.com/#org',
+      name: 'BizThread AI',
+      url: BIZTHREAD.url,
+      description: `${BIZTHREAD.headline} ${BIZTHREAD.body}`,
     },
     ...WORK.map((w, i) => ({
       '@type': 'CreativeWork',
@@ -198,6 +219,21 @@ that is quicker to read.
 Seven service lines. Clients take one or hand over the whole brand.
 
 ${SERVICES.map(line).join('\n')}
+
+## Also called
+
+Clients search for these in plain words. They map to the service lines above.
+
+- Video editing, video production, reels and motion graphics → Visual Content Creation
+- Social media marketing and management → Social Media & Content Marketing
+- Digital marketing, paid ads and performance marketing → Sales Driven Marketing Strategy
+- Logo design and identity design → Brand Strategy & Identity Design
+- Web design and development → Website Design & Development
+
+## Sister business
+
+**BizThread AI** (${BIZTHREAD.url}) — ${BIZTHREAD.intro} ${BIZTHREAD.body} Free for
+seven days, no card needed. Separate company, same team.
 
 ## Process
 
@@ -300,11 +336,12 @@ export function studyMeta(w) {
     description: desc,
     canonical: `${SITE}/work/${s.slug}/`,
     image: `${SITE}${w.image}`,
+    imageAlt: w.alt,
   }
 }
 
 /** One entry per indexable URL: the homepage plus every case study. */
-export function sitemapXml(lastmod = '2026-09-01') {
+export function sitemapXml(lastmod = new Date().toISOString().slice(0, 10)) {
   const urls = [
     { loc: `${SITE}/`, priority: '1.0' },
     ...WORK.map((w) => ({ loc: `${SITE}/work/${STUDIES[w.client].slug}/`, priority: '0.8' })),

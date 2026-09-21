@@ -77,6 +77,7 @@ const seo = () => {
       page = setMeta(page, 'property', 'og:title', meta.title)
       page = setMeta(page, 'property', 'og:description', meta.description)
       page = setMeta(page, 'property', 'og:image', meta.image)
+      page = setMeta(page, 'property', 'og:image:alt', meta.imageAlt)
       page = setMeta(page, 'property', 'og:type', 'article')
       page = setMeta(page, 'name', 'twitter:title', meta.title)
       page = setMeta(page, 'name', 'twitter:description', meta.description)

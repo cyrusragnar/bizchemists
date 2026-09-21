@@ -410,6 +410,18 @@ export const FAQ = [
     a: 'We scope every project individually rather than publishing fixed packages, because a single-service brief and a full brand build are very different pieces of work. Book a call and we will give you a scope and a number.',
   },
   {
+    q: 'Do you do video editing and video production?',
+    a: 'Yes. Visual content creation is one of our seven service lines: product, food and lifestyle photography, short-form video and reels, motion graphics and animated cutdowns. We shoot, edit and export in platform-ready sizes, so one shoot leaves you with a content library rather than a single hero film.',
+  },
+  {
+    q: 'Do you handle social media marketing and management?',
+    a: 'Yes. Social media and content marketing is a service line of its own: content calendars, platform-native posts, community management and monthly reporting. We run Table 43 in Kuala Lumpur entirely from Bangladesh, where the account grew 180% in followers.',
+  },
+  {
+    q: 'Is The BizChemists a digital marketing agency?',
+    a: 'Yes, and a creative one. Alongside branding and content we run sales-driven marketing: funnel and offer design, paid media planning and buying, landing pages, conversion testing and revenue attribution. Campaigns are reported on revenue rather than on impressions.',
+  },
+  {
     q: 'How do you run a project?',
     a: 'Four stages, in order: Discover, where we study your brand, market and audience; Strategize, where we set a data-driven plan; Create, where designs, content and campaigns are produced; and Elevate, where we launch, measure and scale.',
   },
