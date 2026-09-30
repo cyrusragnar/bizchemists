@@ -37,7 +37,7 @@ Two conclusions, and they pull in different directions:
 | `/services/video-production/` | video editing agency in Bangladesh | video production, reels, motion graphics, product photography |
 | `/services/web-design/` | web design agency Bangladesh | website development, responsive build |
 | `/services/influencer-marketing/` | influencer marketing agency in Bangladesh | creator partnerships, campaign reporting |
-| `/services/growth-marketing/` | digital marketing agency in Bangladesh | paid media, performance marketing, attribution |
+| `/services/growth-marketing/` | digital marketing agency in Bangladesh | Facebook ads, Google Ads, Meta ads, performance marketing, attribution |
 | `/services/social-media-marketing/` | social media marketing agency in Bangladesh | social media management, content calendar |
 | `/services/recruitment-support/` | employer branding Bangladesh | recruitment marketing, job adverts |
 
@@ -56,12 +56,16 @@ engines cite a page.
   "in Bangladesh". The service pages mention Dhaka where it is true, but there is no
   page built for the city. A Google Business Profile is the better answer for this
   before a page is.
-- **Which ad platforms.** "Facebook ads agency Bangladesh" and "Google Ads agency" are
-  searched heavily. The growth page does not name a platform, because nothing on record
-  says which ones we buy on. Name them and they can be added honestly.
 - **No informational content.** Every page here is a service page, which catches people
   ready to hire. Nothing catches the person searching "how much does branding cost in
   Bangladesh" six weeks earlier.
+
+## Closed since first written
+
+- **Ad platforms are named.** We run Meta ads (Facebook and Instagram) and Google Ads,
+  confirmed 2026-10-01. The growth page, the service line itself, the homepage answer,
+  llms.txt and the organisation schema all say so, which puts us in reach of "Facebook
+  ads agency Bangladesh" and "Google Ads agency Bangladesh".
 
 ## Before changing this
 

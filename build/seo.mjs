@@ -131,6 +131,8 @@ export function jsonLd() {
         'Youth-led marketing agency',
         'Marketing agency in Bangladesh',
         'Digital marketing agency',
+        'Facebook and Instagram ads',
+        'Google Ads management',
         'Video editing and video production',
         'Social media marketing and management',
         'Logo and identity design',
@@ -235,7 +237,8 @@ Clients search for these in plain words. They map to the service lines above.
 
 - Video editing, video production, reels and motion graphics → Visual Content Creation
 - Social media marketing and management → Social Media & Content Marketing
-- Digital marketing, paid ads and performance marketing → Sales Driven Marketing Strategy
+- Digital marketing, performance marketing → Sales Driven Marketing Strategy
+- Facebook ads, Instagram ads, Meta ads, Google Ads → Sales Driven Marketing Strategy
 - Logo design and identity design → Brand Strategy & Identity Design
 - Web design and development → Website Design & Development
 

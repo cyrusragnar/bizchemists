@@ -143,7 +143,7 @@ export const SERVICES = [
     summary: 'A plan tied to a number you care about, with the tracking in place before launch so you can see which spend produced which sale.',
     includes: [
       'Funnel and offer design',
-      'Paid media planning and buying',
+      'Paid media planning and buying on Facebook, Instagram and Google',
       'Landing pages and conversion testing',
       'Revenue attribution and reporting',
     ],
@@ -429,7 +429,7 @@ export const FAQ = [
   },
   {
     q: 'Is The BizChemists a digital marketing agency?',
-    a: 'Yes, and a creative one. Alongside branding and content we run sales-driven marketing: funnel and offer design, paid media planning and buying, landing pages, conversion testing and revenue attribution. Campaigns are reported on revenue rather than on impressions.',
+    a: 'Yes, and a creative one. Alongside branding and content we run sales-driven marketing: funnel and offer design, Facebook and Instagram ads, Google Ads, landing pages, conversion testing and revenue attribution. Campaigns are reported on revenue rather than on impressions.',
   },
   {
     q: 'How do you run a project?',
@@ -744,7 +744,7 @@ export const SERVICE_PAGES = {
     metaTitle: "Digital Marketing Agency in Bangladesh | BizChemists",
     metaDescription:
       "Digital marketing measured on revenue rather than impressions: funnel and offer design, paid media, landing pages, conversion testing and attribution.",
-    lede: "A plan tied to a number you care about, with the tracking in place before launch so you can see which spend produced which sale. Funnel and offer design, paid media planning and buying, landing pages, conversion testing, and revenue attribution.",
+    lede: "A plan tied to a number you care about, with the tracking in place before launch so you can see which spend produced which sale. Funnel and offer design, Facebook and Instagram ads, Google Ads, landing pages, conversion testing, and revenue attribution.",
     sections: [
       {
         h: "Who this is for",
@@ -766,8 +766,8 @@ export const SERVICE_PAGES = {
         a: "There is no fixed floor. Disguise Official launched on $25 of ad spend. What matters more than the number is whether the offer is right and the tracking works before the spend starts.",
       },
       {
-        q: "Where do the ads run?",
-        a: "Wherever your buyers already are, decided from the audience rather than from habit. Placement, budget split and the test plan are presented together before anything is bought.",
+        q: "Do you run Facebook ads and Google Ads?",
+        a: "Both. Meta ads on Facebook and Instagram reach people who are not looking for you yet; Google Ads catch the ones already searching for what you sell. Which side gets the budget depends on your offer, and the split is agreed before anything is bought.",
       },
       {
         q: "What do you report on?",
