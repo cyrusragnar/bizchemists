@@ -592,7 +592,7 @@ export const SERVICE_PAGES = {
     sections: [
       {
         h: "Who this is for",
-        p: "Labels launching into a crowded market, and businesses whose look has drifted: a logo from one designer, a feed from another, a website from a third, and no line connecting them. Both problems have the same answer, which is to decide what the brand is before deciding what it looks like.",
+        p: "Labels launching into a crowded market, and businesses whose look has drifted: a logo from one designer, a feed from another, a website from a third, and no line connecting them. Both problems have the same answer, which is to decide what the brand is before deciding what it looks like. We are a Bangladesh agency and have built identities for a streetwear label here and a restaurant brand in Chittagong.",
       },
       {
         h: "How the work runs",
@@ -600,7 +600,7 @@ export const SERVICE_PAGES = {
       },
       {
         h: "Why strategy comes first",
-        p: "A logo cannot fix unclear positioning, it can only decorate it. Settling what you stand for and who you are speaking to comes first. It is also why these identities survive contact with a feed: the team that sets the rules is the team that produces the content and campaigns afterwards.",
+        p: "A branding agency that opens a design file before it can say who the brand is for is guessing. A logo cannot fix unclear positioning, it can only decorate it. Settling what you stand for and who you are speaking to comes first. It is also why these identities survive contact with a feed: the team that sets the rules is the team that produces the content and campaigns afterwards.",
       },
     ],
     proof: ["Disguise Official", "Pizza Gallery", "Accolade.clo"],
@@ -623,11 +623,11 @@ export const SERVICE_PAGES = {
 
   "Visual Content Creation": {
     slug: "video-production",
-    h1: "Video Production & Visual Content",
-    metaTitle: "Video Production & Editing Agency | The BizChemists",
+    h1: "Video Editing & Production",
+    metaTitle: "Video Editing & Production Agency in Bangladesh | BizChemists",
     metaDescription:
       "Video production, editing, reels, motion graphics and photography for brands in Bangladesh and beyond, shot and cut for the platforms you post on.",
-    lede: "Shoots planned around where the work will run, so you finish with a library sized and cut for every placement rather than one hero film and a problem. Product, food and lifestyle photography, short-form video and reels, motion graphics, and exports ready for each platform.",
+    lede: "Shoots planned around where the work will run, so you finish with a library sized and cut for every placement rather than one hero film and a problem. Product, food and lifestyle photography, short-form video and reels, motion graphics, and video editing finished in the sizes and lengths each platform wants.",
     sections: [
       {
         h: "Who this is for",
@@ -639,14 +639,18 @@ export const SERVICE_PAGES = {
       },
       {
         h: "Produced remotely when that makes sense",
-        p: "Table 43, a restaurant in Kuala Lumpur, is produced entirely from Bangladesh, and grew 180% in followers with 320K+ monthly reach. Distance is a logistics problem rather than a creative one.",
+        p: "Table 43, a restaurant in Kuala Lumpur, is produced entirely from Bangladesh, and grew 180% in followers with 320K+ monthly reach. Distance is a logistics problem rather than a creative one. We are a creative agency rather than an edit house, so the plan, the shoot and the edit sit with one team.",
       },
     ],
     proof: ["Table 43 Malaysia", "KOSTCON 2025", "Accolade.clo"],
     faqs: [
       {
         q: "Do you shoot outside Dhaka?",
-        a: "Yes. Recent projects have run in Dhaka and Chittagong in Bangladesh and in Kuala Lumpur, Malaysia. Where travel does not make sense we produce remotely: the Table 43 content is made in Bangladesh for a restaurant in Malaysia.",
+        a: "Yes. Video production has run in Dhaka and Chittagong in Bangladesh and in Kuala Lumpur, Malaysia. Where travel does not make sense we produce remotely: the Table 43 content is made in Bangladesh for a restaurant in Malaysia.",
+      },
+      {
+        q: "What does the video editing include?",
+        a: "Cuts for each placement, captions and titles, colour and sound, motion graphics and animated cutdowns, and exports in the sizes each platform wants. Editing is planned alongside the shoot rather than bolted on afterwards, which is what lets one shoot produce a quarter of content.",
       },
       {
         q: "What do you deliver?",
@@ -670,11 +674,11 @@ export const SERVICE_PAGES = {
     sections: [
       {
         h: "Who this is for",
-        p: "Businesses whose site is a brochure nobody reads, and businesses running an entire operation out of a DM inbox with no site at all. Also brands that look sharp offline and fall apart online.",
+        p: "Businesses whose site is a brochure nobody reads, and businesses running an entire operation out of a DM inbox with no site at all. Also brands that look sharp offline and fall apart online. We build for clients in Dhaka and elsewhere in Bangladesh, and for Bangladeshi teams selling abroad.",
       },
       {
         h: "Built to ask for the enquiry",
-        p: "Every page gets one job. The route from arrival to enquiry is mapped first and the design follows it, which is usually the difference between a site that looks finished and a site that produces leads.",
+        p: "Every page gets one job. A web design agency that hands over a site nobody enquires through has built a brochure. The route from arrival to enquiry is mapped first and the design follows it, which is usually the difference between a site that looks finished and a site that produces leads.",
       },
       {
         h: "Fast by default",
@@ -709,7 +713,7 @@ export const SERVICE_PAGES = {
       },
       {
         h: "Chosen on overlap, not on reach",
-        p: "A creator with 20,000 of the right followers beats one with 200,000 of the wrong ones. Audience overlap, engagement quality and previous brand work are checked before a name reaches your shortlist.",
+        p: "A creator with 20,000 of the right followers beats one with 200,000 of the wrong ones. Audience overlap, engagement quality and previous brand work are checked before a name reaches your shortlist. An influencer marketing agency that shortlists on reach alone is selling you the easy number.",
       },
       {
         h: "Reported creator by creator",
@@ -748,7 +752,7 @@ export const SERVICE_PAGES = {
       },
       {
         h: "Tracking before spend",
-        p: "Attribution added after a campaign launches is guesswork. The tracking goes in first, so the report at the end answers the only question worth asking, which is what this produced.",
+        p: "Most of what a digital marketing agency reports is decided before launch. Attribution added afterwards is guesswork. The tracking goes in first, so the report at the end answers the only question worth asking, which is what this produced.",
       },
       {
         h: "Budget changes the plan, not the discipline",
@@ -783,11 +787,11 @@ export const SERVICE_PAGES = {
     sections: [
       {
         h: "Who this is for",
-        p: "Accounts that post when somebody remembers to, and accounts that have grown to the point where answering comments has quietly become a second job.",
+        p: "Accounts that post when somebody remembers to, and accounts that have grown to the point where answering comments has quietly become a second job. We run accounts from Bangladesh for brands in Dhaka, Chittagong and Kuala Lumpur.",
       },
       {
         h: "A calendar you can keep",
-        p: "Most social plans die because they demand a new idea every day. Pillars and repeatable formats come first, so the calendar is filled by a system rather than by inspiration.",
+        p: "Most social plans die because they demand a new idea every day. Pillars and repeatable formats come first, so the calendar is filled by a system rather than by inspiration. That is the difference between a social media marketing agency and somebody posting on your behalf.",
       },
       {
         h: "Run end to end, from anywhere",
@@ -822,7 +826,7 @@ export const SERVICE_PAGES = {
     sections: [
       {
         h: "Who this is for",
-        p: "Growing teams competing for the same shortlist as larger employers, where the job itself is good but the advert does not say so.",
+        p: "Growing teams competing for the same shortlist as larger employers, where the job itself is good but the advert does not say so. We work with employers in Dhaka and across Bangladesh.",
       },
       {
         h: "Marketing applied to hiring",
