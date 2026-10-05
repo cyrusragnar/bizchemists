@@ -56,29 +56,39 @@ export default function App() {
     route === '/services' ? 'services' : route === '/work' ? 'work' : route === '/insights' ? 'insights' : null
   const article = route.startsWith('/insights/') ? insightOf(route.slice('/insights/'.length)) : null
 
+  const subPage = study || servicePage || hub || article
+
+  /* The reaction plays on the homepage and nowhere else. A sub-route never mounts the
+     preloader, so it never reports being done — and anything keyed off `loading`
+     alone would wait on it forever. That is exactly what happened: body stayed
+     overflow:hidden so nothing could be scrolled by hand, and the scroll scenes never
+     ran, so `has-js` was never lifted and the whole footer stayed invisible. */
+  const waiting = loading && !subPage
+
   const onPreloaderDone = useCallback(() => setLoading(false), [])
 
   // nothing scrolls behind the reaction
   useEffect(() => {
-    document.body.style.overflow = loading ? 'hidden' : ''
+    document.body.style.overflow = waiting ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
     }
-  }, [loading])
+  }, [waiting])
 
-  // Scroll machinery starts only once the preloader has cleared, so ScrollTrigger
-  // measures the settled layout rather than the locked one.
+  /* Scroll machinery starts once the preloader has cleared, so ScrollTrigger measures
+     the settled layout rather than the locked one — and restarts on every route, so
+     each page's reveals are wired to its own DOM instead of the previous page's. */
   useEffect(() => {
-    if (loading) return
+    if (waiting) return
     const stopScroll = initSmoothScroll()
     const stopScenes = initScrollScenes()
     return () => {
       stopScenes()
       stopScroll()
     }
-  }, [loading])
+  }, [waiting, route])
 
-  if (study || servicePage || hub || article) {
+  if (subPage) {
     return (
       <div className="cursor-host">
         <div className="cursor-bloom" aria-hidden="true" />
@@ -98,7 +108,7 @@ export default function App() {
 
   return (
     <div className="cursor-host">
-      {loading && <Preloader onDone={onPreloaderDone} />}
+      {waiting && <Preloader onDone={onPreloaderDone} />}
 
       <div className="cursor-bloom" aria-hidden="true" />
       <div className="cursor-ring" aria-hidden="true" />
