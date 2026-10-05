@@ -177,6 +177,17 @@ test('each service page carries the phrase it is meant to rank for', () => {
   }
 })
 
+test('the analytics tag reaches every page', () => {
+  for (const path of ALL) {
+    expect(page(path), `/${path} has no analytics tag`).toContain('src="/analytics.js"')
+  }
+  const boot = readFileSync(join(DIST, 'analytics.js'), 'utf8')
+  expect(boot).toContain('G-T6ZP3BG896')
+  // an inline snippet would be refused by our own Content-Security-Policy
+  expect(boot).toContain('googletagmanager.com/gtag/js')
+  expect(boot).toContain('localhost')
+})
+
 test('llms.txt describes the site for AI engines', () => {
   const llms = readFileSync(join(DIST, 'llms.txt'), 'utf8')
   expect(llms).toContain('# The BizChemists')

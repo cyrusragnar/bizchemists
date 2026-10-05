@@ -22,9 +22,11 @@ export function usePath() {
     const sync = () => setPath(readPath())
     window.addEventListener('popstate', sync)
     window.addEventListener('hashchange', sync)
+    window.addEventListener('routechange', sync)
     return () => {
       window.removeEventListener('popstate', sync)
       window.removeEventListener('hashchange', sync)
+      window.removeEventListener('routechange', sync)
     }
   }, [])
 
@@ -35,8 +37,10 @@ export function navigate(to) {
   if (readPath() === to) return
   try {
     window.history.pushState({}, '', to)
-    // pushState does not fire popstate; usePath listens for one either way
-    window.dispatchEvent(new PopStateEvent('popstate'))
+    /* pushState fires nothing, so the app is told directly. Deliberately not a
+       synthetic popstate: analytics counts a page view on pushState and again on
+       popstate, and one navigation is one page view. */
+    window.dispatchEvent(new Event('routechange'))
   } catch {
     window.location.hash = '#' + to
   }
