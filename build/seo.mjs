@@ -5,8 +5,8 @@
  * src/content.js, so the page, the structured data and llms.txt cannot drift apart.
  */
 import {
-  BIZTHREAD, CONTACT, FAQ, HUBS, MAILTO_CALL, PROCESS, SERVICE_LIST, SERVICE_PAGES, SERVICES, SOCIAL,
-  STATS, STORY, STUDIES, VALUES, WORK,
+  AUTHOR, BIZTHREAD, CONTACT, FAQ, HUBS, INSIGHTS, MAILTO_CALL, PROCESS, SERVICE_LIST, SERVICE_PAGES,
+  SERVICES, SOCIAL, STATS, STORY, STUDIES, VALUES, WORK,
 } from '../src/content.js'
 
 /* One source for the production origin. Override at build time with SITE_URL so a
@@ -48,7 +48,7 @@ ${impact}
 
   return `<div id="seo-fallback">
 <nav aria-label="Primary">
-<a href="/services/">Services</a> · <a href="/work/">Work</a> · <a href="#story">Story</a> · <a href="#process">Process</a> · <a href="#faq">Questions</a> · <a href="#contact">Contact</a>
+<a href="/services/">Services</a> · <a href="/work/">Work</a> · <a href="/insights/">Insights</a> · <a href="#story">Story</a> · <a href="#process">Process</a> · <a href="#faq">Questions</a> · <a href="#contact">Contact</a>
 </nav>
 
 <header>
@@ -240,6 +240,12 @@ included, proof and questions.
 
 ${SERVICE_LIST.map((p) => `- [${p.h1}](${SITE}/services/${p.slug}/) — ${p.metaDescription}`).join('\n')}
 
+## Insights
+
+Index: ${SITE}/insights/ — written from the projects rather than from theory.
+
+${INSIGHTS.map((a) => `- [${a.h1}](${SITE}/insights/${a.slug}/) — ${a.metaDescription}`).join('\n')}
+
 ## Also called
 
 Clients search for these in plain words. They map to the service lines above.
@@ -380,6 +386,8 @@ export function sitemapXml(lastmod = new Date().toISOString().slice(0, 10)) {
     { loc: `${SITE}/`, priority: '1.0' },
     { loc: `${SITE}/services/`, priority: '0.9' },
     { loc: `${SITE}/work/`, priority: '0.9' },
+    { loc: `${SITE}/insights/`, priority: '0.8' },
+    ...INSIGHTS.map((a) => ({ loc: `${SITE}/insights/${a.slug}/`, priority: '0.7' })),
     ...SERVICE_LIST.map((p) => ({ loc: `${SITE}/services/${p.slug}/`, priority: '0.9' })),
     ...WORK.map((w) => ({ loc: `${SITE}/work/${STUDIES[w.client].slug}/`, priority: '0.8' })),
   ]
@@ -549,7 +557,14 @@ export function serviceMeta(p) {
 export function hubHtml(kind) {
   const hub = HUBS[kind]
   const items =
-    kind === 'services'
+    kind === 'insights'
+      ? INSIGHTS.map((a) => ({
+          href: `/insights/${a.slug}/`,
+          name: a.h1,
+          line: a.dek,
+          extra: `Published ${a.published} by ${AUTHOR.name}`,
+        }))
+      : kind === 'services'
       ? SERVICE_LIST.map((p) => ({
           href: `/services/${p.slug}/`,
           name: p.h1,
@@ -571,6 +586,7 @@ export function hubHtml(kind) {
 <header>
 <h1>${esc(hub.h1)}</h1>
 <p class="lede">${esc(hub.lede)}</p>
+${(hub.intro || []).map((p) => `<p>${esc(p)}</p>`).join('')}
 </header>
 
 <main>
@@ -602,7 +618,14 @@ export function hubJsonLd(kind) {
   const hub = HUBS[kind]
   const url = `${SITE}/${hub.slug}/`
   const list =
-    kind === 'services'
+    kind === 'insights'
+      ? INSIGHTS.map((a, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: a.h1,
+          url: `${SITE}/insights/${a.slug}/`,
+        }))
+      : kind === 'services'
       ? SERVICE_LIST.map((p, i) => ({
           '@type': 'ListItem',
           position: i + 1,
@@ -648,6 +671,133 @@ export function hubMeta(kind) {
     title: hub.metaTitle,
     description: hub.metaDescription,
     canonical: `${SITE}/${hub.slug}/`,
+    image: `${SITE}/brand/hero.jpg`,
+    imageAlt: 'The BizChemists poster: Where Brands Are Formulated.',
+  }
+}
+
+/* ----------------------------------------------------------------- insights */
+
+/** One article, readable without JavaScript like every other page here. */
+export function insightHtml(a) {
+  const table = a.projectTable
+    ? `<table>
+<thead><tr><th>Project</th><th>What it was</th><th>What it produced</th></tr></thead>
+<tbody>${WORK.map(
+        (w) =>
+          `<tr><td><a href="/work/${STUDIES[w.client].slug}/">${esc(w.client)}</a></td><td>${esc(w.result)}</td><td>${
+            w.metrics && w.metrics.length
+              ? w.metrics.map(([v, l]) => `${esc(v)} ${esc(l.toLowerCase())}`).join(', ')
+              : 'No published numbers'
+          }</td></tr>`,
+      ).join('')}</tbody>
+</table>`
+    : ''
+
+  const services = a.services
+    .map((slug) => SERVICE_LIST.find((p) => p.slug === slug))
+    .filter(Boolean)
+    .map((p) => `<li><a href="/services/${p.slug}/">${esc(p.h1)}</a></li>`)
+    .join('')
+
+  return `<div id="seo-fallback">
+<nav aria-label="Breadcrumb"><a href="/">The BizChemists</a> › <a href="/insights/">Insights</a> › <span>${esc(a.h1)}</span></nav>
+
+<header>
+<p class="eyebrow">Insights · The BizChemists</p>
+<h1>${esc(a.h1)}</h1>
+<p class="lede">${esc(a.dek)}</p>
+<p>By ${esc(AUTHOR.name)}, ${esc(AUTHOR.role)} · Published ${esc(a.published)}${
+    a.updated !== a.published ? ` · Updated ${esc(a.updated)}` : ''
+  }</p>
+</header>
+
+<main>
+${a.sections
+    .map(
+      (s, i) => `<section>
+<h2>${esc(s.h)}</h2>
+${s.body.map((p) => `<p>${esc(p)}</p>`).join('')}
+${i === 0 ? table : ''}
+</section>`,
+    )
+    .join('')}
+
+<section>
+<h2>Questions</h2>
+<dl>${a.faqs.map((f) => `<dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd>`).join('')}</dl>
+</section>
+
+<section>
+<h2>The services behind this work</h2>
+<ul>${services}</ul>
+</section>
+</main>
+
+<footer>
+<h2>About the author</h2>
+<p>${esc(AUTHOR.name)} — ${esc(AUTHOR.bio)}</p>
+<p><a class="cta" href="${esc(MAILTO_CALL)}">Book a call</a></p>
+<p><a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a> · <a href="${esc(CONTACT.phoneHref)}">${esc(CONTACT.phone)}</a></p>
+<p><a href="/insights/">All insights</a> · <a href="/services/">All services</a> · <a href="/work/">All work</a></p>
+</footer>
+</div>`
+}
+
+export function insightJsonLd(a) {
+  const url = `${SITE}/insights/${a.slug}/`
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `${url}#article`,
+        headline: a.h1,
+        description: a.dek,
+        url,
+        mainEntityOfPage: url,
+        datePublished: a.published,
+        dateModified: a.updated,
+        inLanguage: 'en',
+        author: {
+          '@type': 'Person',
+          name: AUTHOR.name,
+          jobTitle: AUTHOR.role,
+          description: AUTHOR.bio,
+          worksFor: { '@id': `${SITE}/#org` },
+        },
+        publisher: { '@id': `${SITE}/#org` },
+        image: `${SITE}/brand/hero.jpg`,
+        articleSection: 'Marketing',
+        about: a.projects.map((client) => ({ '@type': 'CreativeWork', name: client })),
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        mainEntity: a.faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'The BizChemists', item: `${SITE}/` },
+          { '@type': 'ListItem', position: 2, name: 'Insights', item: `${SITE}/insights/` },
+          { '@type': 'ListItem', position: 3, name: a.h1, item: url },
+        ],
+      },
+    ],
+  })
+}
+
+export function insightMeta(a) {
+  return {
+    slug: a.slug,
+    title: a.metaTitle,
+    description: a.metaDescription,
+    canonical: `${SITE}/insights/${a.slug}/`,
     image: `${SITE}/brand/hero.jpg`,
     imageAlt: 'The BizChemists poster: Where Brands Are Formulated.',
   }

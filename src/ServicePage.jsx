@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { Breadcrumbs, Logo } from './ui.jsx'
 import { Contact } from './Sections.jsx'
 import ContactForm from './ContactForm.jsx'
-import { MAILTO_CALL, SERVICE_LIST, STUDIES, WORK } from './content.js'
+import { INSIGHTS, MAILTO_CALL, SERVICE_LIST, STUDIES, WORK } from './content.js'
 import { navigate } from './router.js'
 
 /**
@@ -18,6 +18,8 @@ export default function ServicePage({ page }) {
   const { service } = page
   const proof = page.proof.map((client) => WORK.find((w) => w.client === client)).filter(Boolean)
   const related = page.related.map((slug) => SERVICE_LIST.find((p) => p.slug === slug)).filter(Boolean)
+  // articles that drew on this service line, so the cluster links both ways
+  const reading = INSIGHTS.filter((a) => a.services.includes(page.slug))
 
   // The static file already carries the right title; this is for client-side arrivals.
   useEffect(() => {
@@ -184,6 +186,31 @@ export default function ServicePage({ page }) {
             <ContactForm service={service.title} />
           </div>
         </section>
+
+        {reading.length > 0 && (
+          <section className="mt-16 border-t border-white/15 pt-10 md:mt-24">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">Further reading</h2>
+            <ul className="mt-8 flex flex-col gap-4">
+              {reading.map((a) => (
+                <li key={a.slug}>
+                  <a
+                    href={`/insights/${a.slug}/`}
+                    onClick={go(`/insights/${a.slug}/`)}
+                    className="press group block"
+                  >
+                    <span
+                      className="uppercase text-white transition-colors duration-200 group-hover:text-accent"
+                      style={{ fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)', lineHeight: 1.05, fontWeight: 600, letterSpacing: '-0.02em' }}
+                    >
+                      {a.h1}
+                    </span>
+                    <span className="mt-2 block max-w-[68ch] text-sm leading-relaxed text-white/60">{a.dek}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {related.length > 0 && (
           <section className="mt-16 border-t border-white/15 pt-10 md:mt-24">

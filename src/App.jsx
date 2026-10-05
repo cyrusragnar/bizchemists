@@ -8,7 +8,8 @@ import { Contact, Faq, Marquee, Portfolio, Services, Story, Values } from './Sec
 import CaseStudyPage from './CaseStudyPage.jsx'
 import ServicePage from './ServicePage.jsx'
 import HubPage from './HubPage.jsx'
-import { WORK, STUDIES, servicePageOf } from './content.js'
+import ArticlePage from './ArticlePage.jsx'
+import { WORK, STUDIES, insightOf, servicePageOf } from './content.js'
 import { routeOf, usePath } from './router.js'
 import { initScrollScenes, initSmoothScroll } from './motion.js'
 
@@ -51,7 +52,9 @@ export default function App() {
   const route = routeOf(path)
   const study = WORK.find((w) => route === '/work/' + STUDIES[w.client].slug)
   const servicePage = route.startsWith('/services/') ? servicePageOf(route.slice('/services/'.length)) : null
-  const hub = route === '/services' ? 'services' : route === '/work' ? 'work' : null
+  const hub =
+    route === '/services' ? 'services' : route === '/work' ? 'work' : route === '/insights' ? 'insights' : null
+  const article = route.startsWith('/insights/') ? insightOf(route.slice('/insights/'.length)) : null
 
   const onPreloaderDone = useCallback(() => setLoading(false), [])
 
@@ -75,12 +78,20 @@ export default function App() {
     }
   }, [loading])
 
-  if (study || servicePage || hub) {
+  if (study || servicePage || hub || article) {
     return (
       <div className="cursor-host">
         <div className="cursor-bloom" aria-hidden="true" />
         <div className="cursor-ring" aria-hidden="true" />
-        {hub ? <HubPage kind={hub} /> : study ? <CaseStudyPage item={study} /> : <ServicePage page={servicePage} />}
+        {hub ? (
+          <HubPage kind={hub} />
+        ) : article ? (
+          <ArticlePage article={article} />
+        ) : study ? (
+          <CaseStudyPage item={study} />
+        ) : (
+          <ServicePage page={servicePage} />
+        )}
       </div>
     )
   }

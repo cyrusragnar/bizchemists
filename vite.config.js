@@ -10,6 +10,9 @@ import {
   hubHtml,
   hubJsonLd,
   hubMeta,
+  insightHtml,
+  insightJsonLd,
+  insightMeta,
   serviceHtml,
   serviceJsonLd,
   serviceMeta,
@@ -19,7 +22,7 @@ import {
   studyJsonLd,
   studyMeta,
 } from './build/seo.mjs'
-import { SERVICE_LIST, WORK } from './src/content.js'
+import { INSIGHTS, SERVICE_LIST, WORK } from './src/content.js'
 
 const attr = (v) => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;')
 
@@ -75,7 +78,8 @@ const seo = () => {
     const pages = [
       ...WORK.map((w) => ({ meta: studyMeta(w), jsonld: studyJsonLd(w), body: studyHtml(w), dir: 'work', type: 'article' })),
       ...SERVICE_LIST.map((p) => ({ meta: serviceMeta(p), jsonld: serviceJsonLd(p), body: serviceHtml(p), dir: 'services', type: 'website' })),
-      ...['services', 'work'].map((k) => ({ meta: hubMeta(k), jsonld: hubJsonLd(k), body: hubHtml(k), dir: '', type: 'website' })),
+      ...INSIGHTS.map((a) => ({ meta: insightMeta(a), jsonld: insightJsonLd(a), body: insightHtml(a), dir: 'insights', type: 'article' })),
+      ...['services', 'work', 'insights'].map((k) => ({ meta: hubMeta(k), jsonld: hubJsonLd(k), body: hubHtml(k), dir: '', type: 'website' })),
     ]
 
     for (const { meta, jsonld, body, dir, type } of pages) {

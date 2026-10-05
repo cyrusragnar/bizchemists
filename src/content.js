@@ -213,7 +213,7 @@ export const WORK = [
     approach: {
       label: 'Our Approach',
       items: [
-        ['Influencer Collaborations', 'Partnered with top K-Pop influencers to create buzz and authentic engagement.'],
+        ['Influencer Collaborations', 'Partnered with 50+ K-Pop influencers to create buzz and authentic engagement.'],
         ['Content Planning', 'Developed a multi-platform content strategy across social media.'],
         ['Cinematic Reels', 'Produced high-quality promotional videos showcasing the artist lineup.'],
         ['Artist Lineup Highlights', 'Created stunning reveal campaigns for each performing artist.'],
@@ -373,6 +373,7 @@ export const FOOTER_LINKS = [
       ...NAV.map((n) => ({ label: n.label, href: n.href })),
       { label: 'All services', href: '/services/' },
       { label: 'All work', href: '/work/' },
+      { label: 'Insights', href: '/insights/' },
       { label: 'Questions', href: '#faq' },
     ],
   },
@@ -462,7 +463,7 @@ export const STUDIES = {
       },
       {
         h: 'Built on the people the audience already trusts',
-        p: 'We partnered with the K-Pop influencers this audience already follows, so the first thing most fans heard about the concert came from someone they trusted rather than from an advert.',
+        p: 'We partnered with the K-Pop influencers this audience already follows — more than fifty creators in all — so the first thing most fans heard about the concert came from someone they trusted rather than from an advert.',
       },
       {
         h: 'A lineup revealed, not announced',
@@ -877,6 +878,19 @@ export const HUBS = {
     lede: "Seven service lines, run by one team. Take one, or hand over the whole brand. Each page says what the work includes, who it is for, what it produced for other clients, and where it stops.",
     closing: "Not sure which line the work belongs to? Describe it on a call and we will tell you, including when the answer is that you do not need us.",
   },
+  insights: {
+    slug: "insights",
+    h1: "Insights",
+    metaTitle: "Marketing Insights from Bangladesh | The BizChemists",
+    metaDescription:
+      "What we learned running launches in Bangladesh and Malaysia: concerts, restaurants and labels, written from the projects rather than from theory.",
+    lede: "Written from the work, not from a template. Every number in these pieces comes from a project on this site, and where we have nothing worth quoting we say so.",
+    intro: [
+      "There is no publishing schedule here and nothing written to fill one. A piece goes up when a project has taught us something worth a reader's time: what we tried, what the numbers did, and what we would not do again.",
+      "All of it is written by the person who ran the campaigns rather than by someone summarising them afterwards, which is why the examples are specific and the gaps are admitted rather than filled in.",
+    ],
+    closing: "If one of these describes the thing you are about to launch, the call is free and we will tell you what we would do.",
+  },
   work: {
     slug: "work",
     h1: "Selected Work",
@@ -887,3 +901,94 @@ export const HUBS = {
     closing: "Every case study says what the brief was, what we did, and what changed. Where a project has no numbers worth quoting, it says that too.",
   },
 }
+
+/* ----------------------------------------------------------------- insights */
+
+/* Articles at /insights/<slug>. The rule for this section: every claim is either
+   something we did on a named project, or it is not in here. Numbers are the same
+   ones recorded in WORK, so a figure can never drift between a case study and a
+   piece written about it. */
+export const AUTHOR = {
+  name: "Ibtehaz Kabir Zarif",
+  role: "Founder, The BizChemists",
+  bio: "Founder of The BizChemists, a creative marketing and branding agency in Bangladesh. He has led campaigns for concerts, restaurants and fashion labels across Bangladesh and Malaysia.",
+}
+
+export const INSIGHTS = [
+  {
+    slug: "how-to-launch-in-bangladesh",
+    h1: "How to launch in Bangladesh",
+    metaTitle: "How to Launch a Brand in Bangladesh | The BizChemists",
+    metaDescription:
+      "Six launches in Bangladesh and Malaysia and what moved each one: 3,000+ concert tickets, 250% restaurant sales, and a label launched on $25 of ad spend.",
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    dek: "Launches here fail for one of two reasons: nobody knew, or nobody believed. Across six projects — two concerts, two restaurants, two labels — the same three moves did the work. Borrow trust before buying attention, give the decision a real deadline, and make the content local even when you are not.",
+    projectTable: true,
+    sections: [
+      {
+        h: "The six projects, and what each produced",
+        body: [
+          "Every number here comes from a project page on this site, where the full story sits. They are results from specific campaigns, not industry averages and not projections. One of the six has no published numbers, and it is in the table anyway, because a launch without a metric is still a launch.",
+        ],
+      },
+      {
+        h: "Borrow trust before you buy attention",
+        body: [
+          "KOSTCON 2025 brought a K-Drama OST concert to Dhaka for an audience nobody had sold a concert to before. Rather than announce it, we partnered with the K-Pop influencers those fans already followed — more than fifty creators — so the first thing most of them heard about the concert came from someone they trusted rather than from an advert. The campaign reached 2.5M+ people and sold over 3,000 tickets.",
+          "Pizza Gallery worked the same way at a smaller scale: Chittagong food influencers, not national ones. Whose audience it is matters more than how large it is. For a restaurant in Chittagong, a Chittagong food page beats a national page with ten times the followers, because only one of them can walk in on Friday.",
+        ],
+      },
+      {
+        h: "Give the decision a real deadline",
+        body: [
+          "Dhaka Dreams Concert came to us with sales stalled and two weeks to go, cancellation on the table. There was no time to build an audience, only to convert the one that already existed. Limited-time offers and countdowns gave the decision a deadline, Facebook and Instagram campaigns put it in front of music fans rather than everyone, flash pricing forced the moment, and early buyers became the social proof that moved the next wave. Ticket sales tripled and the venue reached 85% capacity.",
+          "The honest caveat: that was a rescue, not a plan. Scarcity works when the deadline is real, because the date of a concert cannot be moved. Invent a deadline that does not exist and you teach people that your prices drop if they wait.",
+        ],
+      },
+      {
+        h: "Reveal, do not announce",
+        body: [
+          "A launch is a season, not a day. For KOSTCON every performing artist got their own reveal moment, with cinematic promotional films carrying the lineup across every platform on a planned schedule rather than one launch push. That gives an audience several reasons to come back and gives the algorithm several things to distribute, instead of one post that has to do all the work.",
+        ],
+      },
+      {
+        h: "Make it local, even when you are not",
+        body: [
+          "Table 43 is a restaurant in Kuala Lumpur whose account is run entirely from Bangladesh. The content still had to read as native to a Malaysian audience, so we moved the focus to Instagram where that audience actually is, directed the on-ground team with shot-by-shot briefs so the footage came back with the composition we had planned, cut it into reels and promos here, and ran the calendar so the account stayed consistent rather than sporadic. Followers grew 180%, monthly reach reached 320K+, and engagement rose 52%.",
+          "The same discipline applies inside one country. Pizza Gallery's captions were written for a Chittagong audience rather than a generic Bangladeshi one, which is a smaller decision than it sounds and a visible one in the comments.",
+        ],
+      },
+      {
+        h: "Budget sets the ceiling, not the method",
+        body: [
+          "Disguise Official launched on $25 of advertising and returned 120K+ views and 50+ sales. That is not a recommendation to spend $25. It is evidence that the offer, the creative and the targeting do their work before the budget does, and that spending more on a campaign that has not proved any of the three only buys a faster answer.",
+        ],
+      },
+      {
+        h: "What this cannot tell you",
+        body: [
+          "Fees and project budgets are not published here, and neither is anything a client has not already agreed to see in public. Results depend on the product, the price, the timing and the market, and a pattern that worked across six projects is a starting point rather than a guarantee. What it does tell you is what we would try first, and in what order.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How long does it take to promote a concert in Bangladesh?",
+        a: "Longer than two weeks, ideally. Dhaka Dreams was turned around in two, reaching 3X ticket sales and 85% capacity, but that was a rescue of an event already on sale. KOSTCON ran as a scheduled campaign with staged artist reveals, which is what you want when the date is still far enough away to build toward.",
+      },
+      {
+        q: "Do influencer partnerships still work for launches in Bangladesh?",
+        a: "Yes, when they are chosen on audience overlap rather than follower count. KOSTCON was built on more than fifty K-Pop creators its audience already followed, and Pizza Gallery on Chittagong food influencers rather than national ones. The question is whether their audience is your audience, not how many of them there are.",
+      },
+      {
+        q: "How much ad budget does a launch need in Bangladesh?",
+        a: "There is no floor worth quoting. Disguise Official launched on $25 of ad spend and returned 120K+ views and 50+ sales. Budget decides how fast you find out whether the offer works; it does not decide whether it works.",
+      },
+    ],
+    services: ["influencer-marketing", "growth-marketing", "social-media-marketing", "video-production"],
+    projects: ["KOSTCON 2025", "Dhaka Dreams Concert", "Table 43 Malaysia", "Disguise Official"],
+  },
+]
+
+export const insightOf = (slug) => INSIGHTS.find((a) => a.slug === slug)

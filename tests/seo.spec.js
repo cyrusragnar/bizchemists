@@ -2,6 +2,7 @@
 import { test, expect } from '@playwright/test'
 import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { AUTHOR, INSIGHTS, SERVICE_LIST, STUDIES, WORK as WORK_ITEMS } from '../src/content.js'
 
 /**
  * Regression tests for the parts of this site a crawler sees.
@@ -19,17 +20,18 @@ const DIST = 'dist'
 const page = (p) => readFileSync(join(DIST, p, 'index.html'), 'utf8')
 const ORIGIN = 'https://bizchemists.com'
 
-const SERVICES = [
-  'brand-identity',
-  'video-production',
-  'web-design',
-  'influencer-marketing',
-  'growth-marketing',
-  'social-media-marketing',
-  'recruitment-support',
+const SERVICES = SERVICE_LIST.map((p) => p.slug)
+const WORK = WORK_ITEMS.map((w) => STUDIES[w.client].slug)
+const ARTICLES = INSIGHTS.map((a) => a.slug)
+const ALL = [
+  '',
+  'services',
+  'work',
+  'insights',
+  ...SERVICES.map((s) => `services/${s}`),
+  ...WORK.map((w) => `work/${w}`),
+  ...ARTICLES.map((a) => `insights/${a}`),
 ]
-const WORK = ['kostcon-2025', 'pizza-gallery', 'dhaka-dreams', 'accolade', 'table-43', 'disguise']
-const ALL = ['', 'services', 'work', ...SERVICES.map((s) => `services/${s}`), ...WORK.map((w) => `work/${w}`)]
 
 const decode = (s = '') =>
   s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
@@ -81,7 +83,12 @@ test.describe('every page', () => {
 })
 
 test('sub-pages carry a breadcrumb trail', () => {
-  for (const path of [...SERVICES.map((s) => `services/${s}`), ...WORK.map((w) => `work/${w}`)]) {
+  const deep = [
+    ...SERVICES.map((s) => `services/${s}`),
+    ...WORK.map((w) => `work/${w}`),
+    ...ARTICLES.map((a) => `insights/${a}`),
+  ]
+  for (const path of deep) {
     const crumbs = jsonLd(page(path))
       .flatMap((g) => g['@graph'] || [g])
       .find((n) => n['@type'] === 'BreadcrumbList')
@@ -95,7 +102,7 @@ test('sub-pages carry a breadcrumb trail', () => {
 test('nothing is an orphan: every page is linked from another page', () => {
   const linked = new Set()
   for (const path of ALL) {
-    for (const m of page(path).matchAll(/href="\/((?:services|work)[a-z0-9/-]*)\/"/g)) linked.add(m[1])
+    for (const m of page(path).matchAll(/href="\/((?:services|work|insights)[a-z0-9/-]*)\/"/g)) linked.add(m[1])
   }
   for (const path of ALL.filter(Boolean)) {
     expect(linked.has(path), `${path} is linked from nowhere`).toBe(true)
@@ -186,6 +193,30 @@ test('the analytics tag reaches every page', () => {
   // an inline snippet would be refused by our own Content-Security-Policy
   expect(boot).toContain('googletagmanager.com/gtag/js')
   expect(boot).toContain('localhost')
+})
+
+test('every article is attributed, dated and connected to the work', () => {
+  for (const slug of ARTICLES) {
+    const html = page(`insights/${slug}`)
+    const article = jsonLd(html)
+      .flatMap((g) => g['@graph'] || [g])
+      .find((n) => n['@type'] === 'Article')
+
+    expect(article, `${slug} has no Article schema`).toBeTruthy()
+    expect(article.author.name).toBe(AUTHOR.name)
+    expect(article.author['@type']).toBe('Person')
+    expect(article.datePublished).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(article.dateModified).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+
+    // the byline is on the page, not only in the markup a reader never sees
+    const text = visible(html)
+    expect(text).toContain(AUTHOR.name)
+
+    // an article that links to no money page is a cluster with nothing at the centre
+    expect((html.match(/href="\/services\/[a-z-]+\//g) || []).length).toBeGreaterThan(0)
+    // and the numbers it quotes should come back to the project they came from
+    expect((html.match(/href="\/work\/[a-z0-9-]+\//g) || []).length).toBeGreaterThan(0)
+  }
 })
 
 test('llms.txt describes the site for AI engines', () => {

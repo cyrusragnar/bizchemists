@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { Breadcrumbs, Logo } from './ui.jsx'
 import { Contact } from './Sections.jsx'
-import { HUBS, MAILTO_CALL, SERVICE_LIST, STUDIES, WORK } from './content.js'
+import { AUTHOR, HUBS, INSIGHTS, MAILTO_CALL, SERVICE_LIST, STUDIES, WORK } from './content.js'
 import { navigate } from './router.js'
 
 /**
@@ -26,7 +26,15 @@ export default function HubPage({ kind }) {
   }
 
   const items =
-    kind === 'services'
+    kind === 'insights'
+      ? INSIGHTS.map((a) => ({
+          key: a.slug,
+          href: `/insights/${a.slug}/`,
+          name: a.h1,
+          line: `${AUTHOR.name} · ${new Date(a.published + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`,
+          note: a.dek,
+        }))
+      : kind === 'services'
       ? SERVICE_LIST.map((p) => ({
           key: p.slug,
           href: `/services/${p.slug}/`,
@@ -79,6 +87,11 @@ export default function HubPage({ kind }) {
           {hub.h1}
         </h1>
         <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-white/80 md:text-xl">{hub.lede}</p>
+        {(hub.intro || []).map((p) => (
+          <p key={p.slice(0, 40)} className="mt-5 max-w-[62ch] text-base leading-relaxed text-white/70">
+            {p}
+          </p>
+        ))}
 
         <ul className={`mt-14 grid gap-5 md:mt-20 ${kind === 'work' ? 'sm:grid-cols-2 lg:grid-cols-3' : ''}`}>
           {items.map((item) => (
