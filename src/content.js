@@ -988,6 +988,318 @@ export const INSIGHTS = [
     ],
     services: ["influencer-marketing", "growth-marketing", "social-media-marketing", "video-production"],
     projects: ["KOSTCON 2025", "Dhaka Dreams Concert", "Table 43 Malaysia", "Disguise Official"],
+    related: [
+      "selling-concert-tickets-bangladesh",
+      "two-weeks-to-fill-a-venue",
+      "launching-a-label-on-a-small-budget",
+      "marketing-a-restaurant-in-bangladesh",
+      "running-social-media-remotely",
+    ],
+  },
+
+  {
+    slug: "selling-concert-tickets-bangladesh",
+    h1: "Selling 3,000 tickets to a concert nobody had run before",
+    metaTitle: "How to Sell Concert Tickets in Bangladesh | BizChemists",
+    metaDescription:
+      "KOSTCON 2025 brought K-Drama OST to Dhaka for an audience nobody had sold a concert to. 50+ creators, staged reveals, 2.5M+ reach and 3,000+ tickets sold.",
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    dek: "KOSTCON 2025 was a K-Drama OST concert in Dhaka for an audience no promoter had sold a concert to before. The campaign reached 2.5M+ people, drew 150K+ engagements and sold more than 3,000 tickets. This is the order we did it in, and why that order mattered.",
+    sections: [
+      {
+        h: "A first-of-its-kind event has no proven demand",
+        body: [
+          "The fandom was real and large. What nobody knew was whether it would pay for a ticket, because it had never been asked. That is a different problem from a sold-out act returning to a city, and it cannot be solved by buying more reach: an audience that has never been asked to show up does not become convinced by an advert telling it to.",
+          "So the first job was not awareness. It was credibility with people who already knew the music and had no reason yet to trust the event.",
+        ],
+      },
+      {
+        h: "Fifty creators before a single advert",
+        body: [
+          "We partnered with more than fifty K-Pop creators the audience already followed, so the first time most fans heard about KOSTCON it came from an account they had chosen to follow rather than from a brand paying to interrupt them.",
+          "The reason to spread it across fifty rather than concentrate it in five is that a fandom is not one room. It is many small ones with their own voices, and a concert needs enough of them nodding at the same time for the thing to feel real rather than promoted.",
+        ],
+      },
+      {
+        h: "A lineup revealed, not announced",
+        body: [
+          "Every performing artist got a reveal moment of their own, carried by cinematic promotional films across platforms on a planned schedule rather than in one launch push.",
+          "An announcement is a single day. A sequence of reveals gives the audience a reason to come back, gives each artist's fans their own moment to react to, and gives the platforms more than one thing to distribute. The same information, spread so it can compound.",
+        ],
+      },
+      {
+        h: "What it produced",
+        body: [
+          "2.5M+ total reach, 150K+ engagements, and more than 3,000 tickets sold. What is not published here is the budget, the fee or what we paid any creator, and those are the numbers that would tell you whether this is affordable for your event. Book a call and we will talk about them for your case.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How many influencers does a concert campaign need in Bangladesh?",
+        a: "KOSTCON worked with more than fifty, chosen on audience overlap rather than follower count. The number follows from how many pockets of a fandom you need nodding at once, not from a target set in advance. A smaller, tighter audience needs fewer.",
+      },
+      {
+        q: "Does this approach work for a local artist rather than an international one?",
+        a: "The two moves underneath it are not specific to K-Pop: reach an audience through accounts it already trusts, and spread the announcement into a sequence. We can only speak for what we have run, and KOSTCON is the clearest example of both.",
+      },
+      {
+        q: "How far ahead should ticket promotion start?",
+        a: "Early enough to run reveals in sequence rather than all at once, which is the whole advantage. Dhaka Dreams Concert shows that two weeks can be survived, but that was a rescue of an event already on sale rather than a plan anyone would choose.",
+      },
+    ],
+    services: ["influencer-marketing", "video-production", "growth-marketing"],
+    projects: ["KOSTCON 2025"],
+    related: ["how-to-launch-in-bangladesh", "two-weeks-to-fill-a-venue"],
+  },
+
+  {
+    slug: "two-weeks-to-fill-a-venue",
+    h1: "Two weeks to fill a venue",
+    metaTitle: "Last-Minute Event Promotion in Bangladesh | BizChemists",
+    metaDescription:
+      "Dhaka Dreams had stalled ticket sales and two weeks to go, with cancellation on the table. Scarcity, targeting and social proof tripled sales to 85% capacity.",
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    dek: "Ticket sales had stalled, the date was two weeks away and cancelling was on the table. There was no time to build an audience, only to convert the one that already existed. Sales tripled and the venue reached 85% capacity.",
+    sections: [
+      {
+        h: "Two weeks changes what the campaign can be",
+        body: [
+          "With months, you build an audience: content, creators, repetition, the slow work of becoming familiar. With two weeks, none of that has time to land. The only people who can still buy are the ones who already know the event exists and have not decided yet.",
+          "So the campaign stopped trying to reach new people and went to work on the undecided.",
+        ],
+      },
+      {
+        h: "The deadline was already real",
+        body: [
+          "A concert date cannot move, which makes urgency honest. Limited-time offers and countdowns put that fixed deadline in front of people who had been treating the decision as open-ended.",
+          "This is the part worth copying carefully. Scarcity works because the constraint is true. Invent one — a sale that keeps getting extended, a last chance that comes round monthly — and you teach an audience that waiting is rewarded, which makes the next campaign harder than this one.",
+        ],
+      },
+      {
+        h: "Aimed at music fans, not at everyone",
+        body: [
+          "Facebook and Instagram campaigns were targeted at music fans rather than a broad audience. On a short runway, waste is not just inefficient, it is fatal: there is no second week to correct a bad audience.",
+        ],
+      },
+      {
+        h: "Early buyers did the convincing",
+        body: [
+          "Flash pricing forced a decision, and the people who took it became the evidence for the next wave. Amplified early-buyer sentiment answers the question an undecided buyer is actually asking, which is not whether the event is good but whether anyone else is going.",
+        ],
+      },
+      {
+        h: "What it produced, and what it cost",
+        body: [
+          "Ticket sales tripled, the venue reached 85% capacity, and the concert happened. The honest framing is that this was a rescue, not a strategy. The tools that work at two weeks — discounting, urgency, pressure — are the ones you cannot use repeatedly without training your audience to wait for them. An event that starts its campaign early never has to spend them.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Can a campaign still save an event two weeks out?",
+        a: "It did here: 3X ticket sales and 85% capacity from a standing start of stalled sales. What made it possible was an audience that already knew about the event. If nobody has heard of it two weeks out, there is no one to convert and the answer changes.",
+      },
+      {
+        q: "Do flash sales damage the brand?",
+        a: "Used once, under a real deadline, they convert people who were already interested. Used routinely, they teach buyers that the price drops if they wait, which costs more over a year than the single campaign earned.",
+      },
+      {
+        q: "What should an event do instead of a rescue?",
+        a: "Start the campaign while reveals, creators and content still have room to compound. KOSTCON 2025 is the version of this with time on its side, and it sold more than 3,000 tickets without needing a discount to force the moment.",
+      },
+    ],
+    services: ["growth-marketing", "social-media-marketing"],
+    projects: ["Dhaka Dreams Concert"],
+    related: ["how-to-launch-in-bangladesh", "selling-concert-tickets-bangladesh"],
+  },
+
+  {
+    slug: "launching-a-label-on-a-small-budget",
+    h1: "Launching a label on $25 of ad spend",
+    metaTitle: "Launch a Clothing Brand in Bangladesh | The BizChemists",
+    metaDescription:
+      "Disguise Official launched on $25 of advertising and returned 120K+ views and 50+ sales. What $25 could not buy, and what had to be right before it was spent.",
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    dek: "Disguise Official is a streetwear label that launched on $25 of advertising and returned 120K+ views and 50+ sales. The budget is the least interesting part of that sentence. Everything that made it possible was decided before the money moved.",
+    sections: [
+      {
+        h: "What $25 cannot buy",
+        body: [
+          "It cannot buy reach at scale, repetition, or room to test. It cannot rescue a product nobody wants or creative nobody stops for. A budget that small is not a campaign, it is a measuring instrument: it tells you quickly whether the offer and the creative are doing their jobs.",
+          "Which means everything the budget cannot carry has to be carried by something else.",
+        ],
+      },
+      {
+        h: "Identity first, campaign second",
+        body: [
+          "We built a cohesive digital identity and ran campaigns from concept to delivery so the voice, the look and the positioning stayed consistent everywhere the label appeared. The aim was a foundation for long-term recognition rather than a launch spike.",
+          "For a streetwear label this is not decoration. The thing being sold is partly the identity, and a buyer deciding whether to wear your name in public is reading consistency as evidence that you will still exist next season.",
+        ],
+      },
+      {
+        h: "Shoots directed, not improvised",
+        body: [
+          "Photoshoots and video production were directed from idea to final output, with the editing workflow supervised against brand standards and schedules, locations and resources coordinated so campaign assets landed on time.",
+          "Improvised content is cheap to make and expensive to use: it arrives in the wrong shapes, in a different mood each time, and someone has to make it work later. Directed content costs more attention up front and less of everything afterwards.",
+        ],
+      },
+      {
+        h: "Calendars against a commercial goal, ads read closely",
+        body: [
+          "Content calendars were planned against the audience and the commercial goal rather than a posting habit, and Meta ads campaigns were read closely enough to keep improving engagement, reach and conversions, with the strategy tuned to seasonal trends rather than set once.",
+        ],
+      },
+      {
+        h: "What it produced",
+        body: [
+          "120K+ views and 50+ sales from $25 of spend. One label, one market, one launch — evidence that the offer and the creative carry a small budget further than a larger budget carries weak ones, not a formula that transfers to every product. A bigger budget would have bought a faster answer, not a different one.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How much should a new clothing brand in Bangladesh spend on ads?",
+        a: "There is no floor worth quoting. Disguise Official launched on $25 and returned 120K+ views and 50+ sales. Spend enough to learn whether the offer works, then spend behind the version that did rather than the version you hoped for.",
+      },
+      {
+        q: "Do I need a full brand identity before launching?",
+        a: "You need enough of one that two posts in a row look like the same company. Logo, colour, type, voice and art direction are what make a small budget compound instead of starting over every time you post.",
+      },
+      {
+        q: "Is streetwear different from other apparel to launch?",
+        a: "The buyer is wearing your name in public, so consistency and identity are doing more of the selling than the product description is. That is why the identity work came before the advertising rather than after it.",
+      },
+    ],
+    services: ["brand-identity", "growth-marketing", "video-production"],
+    projects: ["Disguise Official"],
+    related: ["how-to-launch-in-bangladesh", "marketing-a-restaurant-in-bangladesh"],
+  },
+
+  {
+    slug: "marketing-a-restaurant-in-bangladesh",
+    h1: "Rebuilding a restaurant's marketing from the identity up",
+    metaTitle: "Restaurant Marketing in Bangladesh | The BizChemists",
+    metaDescription:
+      "Pizza Gallery had good pizza and low sales in Chittagong. A brand guideline, a local content operation and Chittagong food influencers moved sales 250%.",
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    dek: "Pizza Gallery opened in Chittagong with a simple idea: great pizza with a vibe of its own. The food delivered and the business did not. Sales were low, the social presence connected with nobody, and no identity held any of it together. Sales rose 250%, reach passed 500K and engagement reached 45%.",
+    sections: [
+      {
+        h: "Good food is not a marketing plan",
+        body: [
+          "The product was never the problem, which is the most common version of this situation and the most frustrating one. People who had eaten there came back. People who had not were given no reason to start, because everything the restaurant published looked like it came from somewhere else.",
+        ],
+      },
+      {
+        h: "The guideline came before the posts",
+        body: [
+          "We joined as the business development and marketing partner and started with a brand guideline: a visual identity built on bold white, orange and red, and a tone of voice consistent enough to survive everything they published.",
+          "Starting with the guideline rather than the content is the difference between a feed and a brand. Without it, every post is a new decision made by whoever is posting, and a year of that leaves a restaurant with no recognisable look at all.",
+        ],
+      },
+      {
+        h: "Shoot the room as it actually is",
+        body: [
+          "Our creative team visited regularly to shoot photo and video, capturing the food and the room as they are rather than as stock photography imagines them: story-driven reels, interactive formats, and captions written for a Chittagong audience rather than a generic one.",
+          "A restaurant sells an evening, not a product. Footage of the actual room is the only thing that shows what the evening is like, and it is the part most places skip because a stock image is faster.",
+        ],
+      },
+      {
+        h: "Local influence, not national reach",
+        body: [
+          "We brought in Chittagong food influencers to put the restaurant in front of local food lovers and trendsetters. A national page with ten times the audience is worth less here, because almost none of that audience can walk in on a Friday evening.",
+        ],
+      },
+      {
+        h: "Managed daily, measured against engagement",
+        body: [
+          "Accounts were managed daily and optimised against engagement rather than posted into and left. Visibility rose, awareness rose, and sales — the number that actually decides whether any of it worked — rose 250%, with 500K+ social reach and a 45% engagement rate.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How often does a restaurant need new content?",
+        a: "Often enough that the account is never stale, which in practice means a managed calendar and regular shoots rather than a burst when someone remembers. Pizza Gallery was managed daily with the creative team visiting regularly to refill the library.",
+      },
+      {
+        q: "Do food influencers actually bring customers?",
+        a: "Local ones can, because their audience is physically able to visit. Pizza Gallery used Chittagong food influencers for exactly that reason. Reach from a national audience looks better in a report and does less for a Friday evening.",
+      },
+      {
+        q: "Should a restaurant fix its branding before its social media?",
+        a: "Branding first, or the social media work has to be redone. Without a guideline every post is a fresh decision, and the inconsistency is visible to customers long before it is visible to the owner.",
+      },
+    ],
+    services: ["brand-identity", "social-media-marketing", "video-production", "influencer-marketing"],
+    projects: ["Pizza Gallery"],
+    related: ["how-to-launch-in-bangladesh", "running-social-media-remotely"],
+  },
+
+  {
+    slug: "running-social-media-remotely",
+    h1: "Running a restaurant's social from another country",
+    metaTitle: "Managing Social Media Remotely | The BizChemists",
+    metaDescription:
+      "Table 43 is in Kuala Lumpur and its account is run from Bangladesh. Shot-by-shot briefs, a platform switch and a kept calendar: 180% follower growth, 320K+ reach.",
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    dek: "Table 43 is a restaurant in Kuala Lumpur whose social media runs entirely from Bangladesh, and still has to read as native to a Malaysian audience. Followers grew 180%, monthly reach passed 320K and engagement rose 52%.",
+    sections: [
+      {
+        h: "The constraint: nobody from the agency is ever in the room",
+        body: [
+          "Everything that usually makes restaurant content work — being there when the light is good, catching the dish as it leaves the pass, reading the room on a busy night — was unavailable. What remained was a local team who were in the room every day, and a plan that had to reach them clearly enough to be followed.",
+        ],
+      },
+      {
+        h: "Move to where the audience is",
+        body: [
+          "The first decision was a platform one: shift the focus to Instagram, where Malaysian audiences actually are. Running the account from abroad makes this easier to see, not harder, because there is no habit of posting where the restaurant has always posted.",
+        ],
+      },
+      {
+        h: "Direct the room you cannot stand in",
+        body: [
+          "We directed the on-ground team remotely with shot-by-shot briefs, so footage came back with the composition we had planned rather than whatever happened to be filmed.",
+          "This is the transferable part. A brief that says take some photos of the food returns a folder nobody can use. A brief that specifies the shot, the angle, the light and the sequence returns raw material that cuts into what was planned. The skill being exported is the planning, not the camera work.",
+        ],
+      },
+      {
+        h: "Edit and design at distance",
+        body: [
+          "That raw footage was cut into polished reels and promos in Bangladesh, with posters and graphics designed to give the promotions a professional edge. Nothing about the editing requires being in the country where the food was cooked.",
+        ],
+      },
+      {
+        h: "Then keep the calendar",
+        body: [
+          "Scheduling, posting and optimisation ran on a calendar so the account stayed consistent rather than sporadic — the least glamorous part, and the one that decides whether the rest compounds. The result was 180% follower growth, 320K+ monthly reach, a 52% rise in engagement, and content that reads as professionally produced despite never having a producer in the room.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Can an agency in another country run a local social media account?",
+        a: "Yes, when someone on the ground can shoot to a brief. Table 43 in Kuala Lumpur is run from Bangladesh and grew 180% in followers with 320K+ monthly reach. What crosses the border is planning, editing and design. What cannot is the camera.",
+      },
+      {
+        q: "What has to be true for remote content production to work?",
+        a: "A local team willing to follow a shot list, briefs specific enough to be followed, and a calendar somebody owns. Without the first, no amount of planning produces usable footage.",
+      },
+      {
+        q: "What does remote production give up?",
+        a: "Spontaneity. Nobody abroad catches the unplanned moment on a busy Friday, so the content is what was planned rather than what happened. For a restaurant building a consistent presence that trade is usually worth it; for live events it would not be.",
+      },
+    ],
+    services: ["social-media-marketing", "video-production"],
+    projects: ["Table 43 Malaysia"],
+    related: ["how-to-launch-in-bangladesh", "marketing-a-restaurant-in-bangladesh"],
   },
 ]
 

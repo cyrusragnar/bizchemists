@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { Breadcrumbs, Logo } from './ui.jsx'
 import { Contact } from './Sections.jsx'
-import { AUTHOR, MAILTO_CALL, SERVICE_LIST, STUDIES, WORK } from './content.js'
+import { AUTHOR, INSIGHTS, MAILTO_CALL, SERVICE_LIST, STUDIES, WORK } from './content.js'
 import { navigate } from './router.js'
 
 /**
@@ -14,6 +14,11 @@ import { navigate } from './router.js'
  */
 export default function ArticlePage({ article }) {
   const services = article.services.map((slug) => SERVICE_LIST.find((p) => p.slug === slug)).filter(Boolean)
+  const related = (article.related || []).map((slug) => INSIGHTS.find((a) => a.slug === slug)).filter(Boolean)
+  // the pillar carries the whole table; a single-project piece links to its own
+  const projects = article.projectTable
+    ? []
+    : (article.projects || []).map((client) => WORK.find((w) => w.client === client)).filter(Boolean)
 
   useEffect(() => {
     document.title = article.metaTitle
@@ -142,6 +147,36 @@ export default function ArticlePage({ article }) {
             </dl>
           </section>
 
+          {projects.length > 0 && (
+            <section className="mt-16">
+              <h2 className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">The work behind this</h2>
+              <ul className="mt-8 flex flex-col">
+                {projects.map((w) => (
+                  <li key={w.client}>
+                    <a
+                      href={`/work/${STUDIES[w.client].slug}/`}
+                      onClick={go(`/work/${STUDIES[w.client].slug}/`)}
+                      className="press group flex items-center justify-between gap-6 border-b border-white/10 py-5"
+                    >
+                      <span>
+                        <span className="block text-base font-semibold uppercase tracking-wide text-white transition-colors duration-200 group-hover:text-accent">
+                          {w.client}
+                        </span>
+                        <span className="mt-1 block text-[11px] font-semibold uppercase tracking-widest text-accent">
+                          {w.result}
+                        </span>
+                      </span>
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="h-5 w-5 shrink-0 text-white/40 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+                      />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           <section className="mt-16">
             <h2 className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
               The services behind this work
@@ -169,6 +204,27 @@ export default function ArticlePage({ article }) {
               ))}
             </ul>
           </section>
+
+          {related.length > 0 && (
+            <section className="mt-16">
+              <h2 className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">Related reading</h2>
+              <ul className="mt-8 flex flex-col gap-5">
+                {related.map((r) => (
+                  <li key={r.slug}>
+                    <a href={`/insights/${r.slug}/`} onClick={go(`/insights/${r.slug}/`)} className="press group block">
+                      <span
+                        className="uppercase text-white transition-colors duration-200 group-hover:text-accent"
+                        style={{ fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)', lineHeight: 1.05, fontWeight: 600, letterSpacing: '-0.02em' }}
+                      >
+                        {r.h1}
+                      </span>
+                      <span className="mt-2 block text-sm leading-relaxed text-white/60">{r.dek}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <aside className="mt-16 rounded-[10px] border border-white/15 bg-forest p-6 sm:p-8">
             <h2 className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">About the author</h2>

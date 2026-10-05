@@ -694,6 +694,15 @@ export function insightHtml(a) {
 </table>`
     : ''
 
+  const projects = (a.projects || [])
+    .map((client) => WORK.find((w) => w.client === client))
+    .filter(Boolean)
+    .map(
+      (w) =>
+        `<li><a href="/work/${STUDIES[w.client].slug}/">${esc(w.client)} — ${esc(w.result)}</a></li>`,
+    )
+    .join('')
+
   const services = a.services
     .map((slug) => SERVICE_LIST.find((p) => p.slug === slug))
     .filter(Boolean)
@@ -728,10 +737,28 @@ ${i === 0 ? table : ''}
 <dl>${a.faqs.map((f) => `<dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd>`).join('')}</dl>
 </section>
 
+${projects && !a.projectTable
+    ? `<section>
+<h2>The work behind this</h2>
+<ul>${projects}</ul>
+</section>`
+    : ''}
+
 <section>
 <h2>The services behind this work</h2>
 <ul>${services}</ul>
 </section>
+
+${(a.related || []).length
+    ? `<section>
+<h2>Related reading</h2>
+<ul>${(a.related || [])
+        .map((slug) => INSIGHTS.find((x) => x.slug === slug))
+        .filter(Boolean)
+        .map((x) => `<li><a href="/insights/${x.slug}/">${esc(x.h1)}</a></li>`)
+        .join('')}</ul>
+</section>`
+    : ''}
 </main>
 
 <footer>

@@ -26,9 +26,20 @@ import { INSIGHTS, SERVICE_LIST, WORK } from './src/content.js'
 
 const attr = (v) => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;')
 
-/** Swap the content of one <meta>, whichever attribute identifies it. */
+/**
+ * Swap the content of one <meta>, whichever attribute identifies it.
+ *
+ * The replacement is a function rather than a string, because String.replace reads
+ * dollar-number sequences in a replacement string as backreferences to capture
+ * groups. A description mentioning 25 dollars of ad spend lost everything from the
+ * dollar onward: the sequence was read as the second capture group, which happened
+ * to be the closing quote.
+ */
 const setMeta = (html, key, name, value) =>
-  html.replace(new RegExp(`(<meta[^>]*${key}="${name}"[^>]*content=")[^"]*(")`), `$1${attr(value)}$2`)
+  html.replace(
+    new RegExp(`(<meta[^>]*${key}="${name}"[^>]*content=")[^"]*(")`),
+    (_match, open, close) => open + attr(value) + close,
+  )
 
 /**
  * Without this the crawler-visible page is `<div id="root"></div>` — which is what
@@ -47,8 +58,8 @@ const seo = () => {
   transformIndexHtml(html) {
     return html
       .replaceAll('__SITE__', SITE)
-      .replace('<!--seo:jsonld-->', `<script type="application/ld+json">${jsonLd()}</script>`)
-      .replace('<!--seo:content-->', staticHtml())
+      .replace('<!--seo:jsonld-->', () => `<script type="application/ld+json">${jsonLd()}</script>`)
+      .replace('<!--seo:content-->', () => staticHtml())
   },
 
   configResolved(config) {
@@ -85,8 +96,8 @@ const seo = () => {
     for (const { meta, jsonld, body, dir, type } of pages) {
       let page = template
         .replaceAll('__SITE__', SITE)
-        .replace(/<title>[\s\S]*?<\/title>/, `<title>${attr(meta.title)}</title>`)
-        .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${meta.canonical}$2`)
+        .replace(/<title>[\s\S]*?<\/title>/, () => `<title>${attr(meta.title)}</title>`)
+        .replace(/(<link rel="canonical" href=")[^"]*(")/, (_m, open, close) => open + meta.canonical + close)
       page = setMeta(page, 'name', 'description', meta.description)
       page = setMeta(page, 'property', 'og:url', meta.canonical)
       page = setMeta(page, 'property', 'og:title', meta.title)
@@ -98,12 +109,12 @@ const seo = () => {
       page = setMeta(page, 'name', 'twitter:description', meta.description)
       page = setMeta(page, 'name', 'twitter:image', meta.image)
       page = page
-        .replace('<!--seo:jsonld-->', `<script type="application/ld+json">${jsonld}</script>`)
-        .replace('<!--seo:content-->', body)
-        .replace('<script type="module" src="/src/main.jsx"></script>', script)
+        .replace('<!--seo:jsonld-->', () => `<script type="application/ld+json">${jsonld}</script>`)
+        .replace('<!--seo:content-->', () => body)
+        .replace('<script type="module" src="/src/main.jsx"></script>', () => script)
         // the hero poster is preloaded for the homepage; a case study never shows it
         .replace(/\n\s*<link rel="preload" as="image"[^>]*>/, '')
-        .replace('</head>', `${styles}\n  </head>`)
+        .replace('</head>', () => `${styles}\n  </head>`)
 
       const out = join(outDir, dir || meta.dir, meta.slug, 'index.html')
       mkdirSync(dirname(out), { recursive: true })
