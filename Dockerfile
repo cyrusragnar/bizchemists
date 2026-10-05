@@ -27,7 +27,7 @@ FROM php:8.3-apache AS runtime
 RUN apt-get update \
  && apt-get install -y --no-install-recommends msmtp msmtp-mta ca-certificates \
  && rm -rf /var/lib/apt/lists/* \
- && a2enmod headers expires deflate \
+ && a2enmod headers expires deflate rewrite \
  && a2dismod -f autoindex \
  && printf 'sendmail_path = "/usr/bin/msmtp -t"\n' > /usr/local/etc/php/conf.d/mail.ini \
  && printf 'expose_php = Off\ndisplay_errors = Off\nlog_errors = On\nerror_log = /dev/stderr\n' \

@@ -7,6 +7,9 @@ import {
   jsonLd,
   llmsTxt,
   robotsTxt,
+  hubHtml,
+  hubJsonLd,
+  hubMeta,
   serviceHtml,
   serviceJsonLd,
   serviceMeta,
@@ -72,6 +75,7 @@ const seo = () => {
     const pages = [
       ...WORK.map((w) => ({ meta: studyMeta(w), jsonld: studyJsonLd(w), body: studyHtml(w), dir: 'work', type: 'article' })),
       ...SERVICE_LIST.map((p) => ({ meta: serviceMeta(p), jsonld: serviceJsonLd(p), body: serviceHtml(p), dir: 'services', type: 'website' })),
+      ...['services', 'work'].map((k) => ({ meta: hubMeta(k), jsonld: hubJsonLd(k), body: hubHtml(k), dir: '', type: 'website' })),
     ]
 
     for (const { meta, jsonld, body, dir, type } of pages) {
@@ -97,7 +101,7 @@ const seo = () => {
         .replace(/\n\s*<link rel="preload" as="image"[^>]*>/, '')
         .replace('</head>', `${styles}\n  </head>`)
 
-      const out = join(outDir, dir, meta.slug, 'index.html')
+      const out = join(outDir, dir || meta.dir, meta.slug, 'index.html')
       mkdirSync(dirname(out), { recursive: true })
       writeFileSync(out, page)
     }

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
-import { Logo } from './ui.jsx'
+import { Breadcrumbs, Logo } from './ui.jsx'
 import { Contact } from './Sections.jsx'
 import ContactForm from './ContactForm.jsx'
 import { MAILTO_CALL, SERVICE_LIST, STUDIES, WORK } from './content.js'
@@ -24,29 +24,26 @@ export default function ServicePage({ page }) {
     document.title = page.metaTitle
   }, [page])
 
-  const backToServices = (e) => {
-    e.preventDefault()
-    navigate('/')
-    requestAnimationFrame(() => {
-      document.querySelector('#expertise')?.scrollIntoView({ block: 'start' })
-    })
-  }
-
   const go = (to) => (e) => {
     e.preventDefault()
     navigate(to)
+  }
+
+  const backToServices = (e) => {
+    e.preventDefault()
+    navigate('/services/')
   }
 
   return (
     <div className="bg-ink">
       <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-4 sm:px-8 md:px-12">
-          <a href="/" onClick={backToServices} className="press flex items-center gap-3">
+          <a href="/" onClick={go('/')} className="press flex items-center gap-3">
             <Logo withWordmark />
           </a>
           <div className="flex items-center gap-5">
             <a
-              href="/"
+              href="/services/"
               onClick={backToServices}
               className="press flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors duration-200 hover:text-accent"
             >
@@ -65,7 +62,10 @@ export default function ServicePage({ page }) {
       </header>
 
       <main className="mx-auto max-w-[1400px] px-5 pb-24 pt-14 sm:px-8 md:px-12 md:pb-32 md:pt-20">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+        <Breadcrumbs
+          trail={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: page.h1 }]}
+        />
+        <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           Service · The BizChemists
         </p>
         <h1

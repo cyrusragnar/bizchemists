@@ -12,6 +12,25 @@ const HERO = '/brand/hero.jpg'
 const HEADING = ['Where', 'Brands Are', 'Formulated']
 
 /**
+ * Whether this visitor gets the film or the still.
+ *
+ * hero.mp4 is 1.6 MB — four fifths of the page weight and the LCP element on a
+ * phone, where much of our audience is on a mobile connection in Bangladesh. It is
+ * decoration: the frame it settles on is the still, so the composition is identical
+ * either way and only the draw-on is lost. It therefore loads on a wide viewport
+ * with no save-data request and no connection the browser reports as slow, and
+ * nowhere else.
+ */
+const wantsFilm = () => {
+  if (prefersReduced()) return false
+  if (window.matchMedia('(max-width: 767px)').matches) return false
+  const link = navigator.connection
+  if (link?.saveData) return false
+  if (link?.effectiveType && ['slow-2g', '2g', '3g'].includes(link.effectiveType)) return false
+  return true
+}
+
+/**
  * The poster is composed with the figure in its left 35% and the rest deliberately
  * empty paper. Two layouts protect that, so no line of type ever lands on her:
  *   under 640 — poster band on top, heading in flow beneath it (she fills too much of
@@ -27,7 +46,7 @@ export default function Hero({ play }) {
   const [motion, setMotion] = useState(false)
 
   useEffect(() => {
-    if (!prefersReduced()) setMotion(true)
+    if (wantsFilm()) setMotion(true)
   }, [])
 
   // Held until the reaction has wiped clear. Autoplaying on mount would run half

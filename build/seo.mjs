@@ -5,8 +5,8 @@
  * src/content.js, so the page, the structured data and llms.txt cannot drift apart.
  */
 import {
-  BIZTHREAD, CONTACT, FAQ, MAILTO_CALL, PROCESS, SERVICE_LIST, SERVICE_PAGES, SERVICES, SOCIAL, STATS,
-  STORY, STUDIES, VALUES, WORK,
+  BIZTHREAD, CONTACT, FAQ, HUBS, MAILTO_CALL, PROCESS, SERVICE_LIST, SERVICE_PAGES, SERVICES, SOCIAL,
+  STATS, STORY, STUDIES, VALUES, WORK,
 } from '../src/content.js'
 
 /* One source for the production origin. Override at build time with SITE_URL so a
@@ -47,6 +47,10 @@ ${impact}
   }).join('')
 
   return `<div id="seo-fallback">
+<nav aria-label="Primary">
+<a href="/services/">Services</a> · <a href="/work/">Work</a> · <a href="#story">Story</a> · <a href="#process">Process</a> · <a href="#faq">Questions</a> · <a href="#contact">Contact</a>
+</nav>
+
 <header>
 <p class="eyebrow">Gen Z Creative &amp; Branding Agency · Born in Bangladesh, working globally</p>
 <h1>The BizChemists — Where Brands Are Formulated</h1>
@@ -55,6 +59,7 @@ ${STORY.body.map((p) => `<p class="lede">${esc(p)}</p>`).join('')}
 <ul class="stats">${STATS.map((s) => `<li><strong>${esc(s.value)}+</strong> ${esc(s.label.replace(/\n/g, ' '))}</li>`).join('')}</ul>
 </header>
 
+<main>
 <section>
 <h2>${esc(STORY.statement.join(' '))}</h2>
 <h3>${esc(STORY.vision.title)}</h3><p>${esc(STORY.vision.body)}</p>
@@ -95,11 +100,14 @@ ${work}
 <p><a href="${esc(BIZTHREAD.url)}">Visit BizThread AI</a> — ${esc(BIZTHREAD.offer)}</p>
 </section>
 
-<section>
+</main>
+
+<footer>
 <h2>Contact The BizChemists</h2>
 <p><a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a> · <a href="${esc(CONTACT.phoneHref)}">${esc(CONTACT.phone)}</a></p>
 <p>Founder: Ibtehaz Kabir Zarif. Based in Bangladesh, working with clients worldwide.</p>
-</section>
+<p><a href="/services/">All services</a> · <a href="/work/">All work</a></p>
+</footer>
 </div>`
 }
 
@@ -227,7 +235,8 @@ ${SERVICES.map(line).join('\n')}
 
 ## Service pages
 
-One page per service line, each with what is included, proof and questions.
+Index: ${SITE}/services/ — one page per service line, each with what is
+included, proof and questions.
 
 ${SERVICE_LIST.map((p) => `- [${p.h1}](${SITE}/services/${p.slug}/) — ${p.metaDescription}`).join('\n')}
 
@@ -255,6 +264,8 @@ ${PROCESS.map((p, i) => `${i + 1}. **${p.title}** — ${p.body}`).join('\n')}
 
 ## Selected work and results
 
+Index: ${SITE}/work/ — one page per project.
+
 | Client | Work | Result |
 | --- | --- | --- |
 ${WORK.map((w) => `| ${w.client} | ${w.result} | ${w.metrics ? w.metrics.map(([v, l]) => `${v} ${l.toLowerCase()}`).join(', ') : 'Brand launched with a distinct identity in a competitive market'} |`).join('\n')}
@@ -280,6 +291,8 @@ export function studyHtml(w) {
     ? `<ul>${w.metrics.map(([v, l]) => `<li><strong>${esc(v)}</strong> ${esc(l)}</li>`).join('')}</ul>`
     : ''
   return `<div id="seo-fallback">
+<nav aria-label="Breadcrumb"><a href="/">The BizChemists</a> › <a href="/work/">Work</a> › <span>${esc(w.client)}</span></nav>
+
 <header>
 <p class="eyebrow">${esc(s.industry)}</p>
 <h1>${esc(w.client)} — ${esc(w.result)}</h1>
@@ -288,6 +301,7 @@ ${metrics}
 <p><a class="cta" href="${esc(MAILTO_CALL)}">Book a call</a> &middot; <a href="/">The BizChemists</a></p>
 </header>
 
+<main>
 <section>
 <h2>Our role</h2><p>${esc(s.role)}</p>
 <h2>Scope</h2><p>${esc(s.scope)}</p>
@@ -302,11 +316,14 @@ ${s.sections.map((x) => `<section><h2>${esc(x.h)}</h2><p>${esc(x.p)}</p></sectio
 
 ${w.impact ? `<section><h2>Impact</h2><p>${esc(w.impact)}</p></section>` : ''}
 
-<section>
+</main>
+
+<footer>
 <h2>Work with The BizChemists</h2>
 <p>A Gen Z focused, youth-led creative marketing and branding agency in Bangladesh, working with clients worldwide.</p>
 <p><a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a> &middot; <a href="${esc(CONTACT.phoneHref)}">${esc(CONTACT.phone)}</a></p>
-</section>
+<p><a href="/work/">All work</a> · <a href="/services/">All services</a></p>
+</footer>
 </div>`
 }
 
@@ -331,7 +348,7 @@ export function studyJsonLd(w) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'The BizChemists', item: `${SITE}/` },
-          { '@type': 'ListItem', position: 2, name: 'Work', item: `${SITE}/#portfolio` },
+          { '@type': 'ListItem', position: 2, name: 'Work', item: `${SITE}/work/` },
           { '@type': 'ListItem', position: 3, name: w.client, item: url },
         ],
       },
@@ -342,9 +359,14 @@ export function studyJsonLd(w) {
 export function studyMeta(w) {
   const s = STUDIES[w.client]
   const desc = w.overview.body.length > 155 ? w.overview.body.slice(0, 152).trimEnd() + '…' : w.overview.body
+  /* A result is cut off around sixty characters, and the project is what someone is
+     scanning for. So the brand is appended only when it fits; where it does not, the
+     project name stands alone and Google takes the site name from the schema. */
+  const base = `${w.client} — ${w.result}`
+  const withBrand = `${base} | BizChemists`
   return {
     slug: s.slug,
-    title: `${w.client} — ${w.result} | The BizChemists`,
+    title: withBrand.length <= 60 ? withBrand : base,
     description: desc,
     canonical: `${SITE}/work/${s.slug}/`,
     image: `${SITE}${w.image}`,
@@ -356,6 +378,8 @@ export function studyMeta(w) {
 export function sitemapXml(lastmod = new Date().toISOString().slice(0, 10)) {
   const urls = [
     { loc: `${SITE}/`, priority: '1.0' },
+    { loc: `${SITE}/services/`, priority: '0.9' },
+    { loc: `${SITE}/work/`, priority: '0.9' },
     ...SERVICE_LIST.map((p) => ({ loc: `${SITE}/services/${p.slug}/`, priority: '0.9' })),
     ...WORK.map((w) => ({ loc: `${SITE}/work/${STUDIES[w.client].slug}/`, priority: '0.8' })),
   ]
@@ -411,6 +435,8 @@ export function serviceHtml(p) {
       : ''
 
   return `<div id="seo-fallback">
+<nav aria-label="Breadcrumb"><a href="/">The BizChemists</a> › <a href="/services/">Services</a> › <span>${esc(p.h1)}</span></nav>
+
 <header>
 <p class="eyebrow">Service &middot; The BizChemists</p>
 <h1>${esc(p.h1)}</h1>
@@ -418,6 +444,7 @@ export function serviceHtml(p) {
 <p><a class="cta" href="${esc(MAILTO_CALL)}">Book a call</a> &middot; <a href="/">The BizChemists</a></p>
 </header>
 
+<main>
 <section>
 <h2>What is included</h2>
 <ul>${s.includes.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
@@ -450,11 +477,14 @@ ${related.length
 </section>`
   : ''}
 
-<section>
+</main>
+
+<footer>
 <h2>Start this project</h2>
 <p>Tell us what you are working on. We reply within one working day.</p>
 <p><a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a> &middot; <a href="${esc(CONTACT.phoneHref)}">${esc(CONTACT.phone)}</a></p>
-</section>
+<p><a href="/services/">All services</a> · <a href="/work/">All work</a></p>
+</footer>
 </div>`
 }
 
@@ -494,7 +524,7 @@ export function serviceJsonLd(p) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'The BizChemists', item: `${SITE}/` },
-          { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE}/#expertise` },
+          { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE}/services/` },
           { '@type': 'ListItem', position: 3, name: p.h1, item: url },
         ],
       },
@@ -508,6 +538,116 @@ export function serviceMeta(p) {
     title: p.metaTitle,
     description: p.metaDescription,
     canonical: `${SITE}/services/${p.slug}/`,
+    image: `${SITE}/brand/hero.jpg`,
+    imageAlt: 'The BizChemists poster: Where Brands Are Formulated.',
+  }
+}
+
+/* ------------------------------------------------------------- section hubs */
+
+/** The page above a set: /services/ and /work/, which were 404s until now. */
+export function hubHtml(kind) {
+  const hub = HUBS[kind]
+  const items =
+    kind === 'services'
+      ? SERVICE_LIST.map((p) => ({
+          href: `/services/${p.slug}/`,
+          name: p.h1,
+          line: p.service.body,
+          extra: `What you end up with: ${p.service.outcome}`,
+        }))
+      : WORK.map((w) => ({
+          href: `/work/${STUDIES[w.client].slug}/`,
+          name: `${w.client} — ${w.result}`,
+          line: w.overview.body,
+          extra:
+            w.metrics && w.metrics.length
+              ? w.metrics.map(([v, l]) => `${v} ${l.toLowerCase()}`).join(', ')
+              : '',
+        }))
+
+  return `<div id="seo-fallback">
+<nav aria-label="Breadcrumb"><a href="/">The BizChemists</a> &rsaquo; <span>${esc(hub.h1)}</span></nav>
+<header>
+<h1>${esc(hub.h1)}</h1>
+<p class="lede">${esc(hub.lede)}</p>
+</header>
+
+<main>
+${items
+    .map(
+      (i) => `<article>
+<h2><a href="${i.href}">${esc(i.name)}</a></h2>
+<p>${esc(i.line)}</p>
+${i.extra ? `<p>${esc(i.extra)}</p>` : ''}
+</article>`,
+    )
+    .join('')}
+
+<section>
+<h2>Work with The BizChemists</h2>
+<p>${esc(hub.closing)}</p>
+<p><a class="cta" href="${esc(MAILTO_CALL)}">Book a call</a></p>
+</section>
+</main>
+
+<footer>
+<p><a href="mailto:${esc(CONTACT.email)}">${esc(CONTACT.email)}</a> &middot; <a href="${esc(CONTACT.phoneHref)}">${esc(CONTACT.phone)}</a></p>
+<p><a href="/">The BizChemists</a> &middot; <a href="/services/">Services</a> &middot; <a href="/work/">Work</a></p>
+</footer>
+</div>`
+}
+
+export function hubJsonLd(kind) {
+  const hub = HUBS[kind]
+  const url = `${SITE}/${hub.slug}/`
+  const list =
+    kind === 'services'
+      ? SERVICE_LIST.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: p.h1,
+          url: `${SITE}/services/${p.slug}/`,
+        }))
+      : WORK.map((w, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: `${w.client} — ${w.result}`,
+          url: `${SITE}/work/${STUDIES[w.client].slug}/`,
+        }))
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${url}#page`,
+        name: hub.h1,
+        description: hub.lede,
+        url,
+        isPartOf: { '@id': `${SITE}/#site` },
+        about: { '@id': `${SITE}/#org` },
+        mainEntity: { '@type': 'ItemList', itemListOrder: 'https://schema.org/ItemListOrderAscending', itemListElement: list },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'The BizChemists', item: `${SITE}/` },
+          { '@type': 'ListItem', position: 2, name: hub.h1, item: url },
+        ],
+      },
+    ],
+  })
+}
+
+export function hubMeta(kind) {
+  const hub = HUBS[kind]
+  return {
+    slug: '',
+    dir: hub.slug,
+    title: hub.metaTitle,
+    description: hub.metaDescription,
+    canonical: `${SITE}/${hub.slug}/`,
     image: `${SITE}/brand/hero.jpg`,
     imageAlt: 'The BizChemists poster: Where Brands Are Formulated.',
   }

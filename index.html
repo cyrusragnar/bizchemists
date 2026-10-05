@@ -51,8 +51,14 @@
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- The poster is the LCP element on every viewport; start it before the CSS resolves. -->
-    <link rel="preload" as="image" href="/brand/hero-start.jpg" fetchpriority="high" />
+    <!--
+      The poster is the LCP element on every viewport, so it starts before the CSS
+      resolves. Which poster depends on the same rule Hero.jsx uses: narrow screens
+      never load the film, so they preload the still it would have settled on, and
+      wider ones preload the frame the film starts from.
+    -->
+    <link rel="preload" as="image" href="/brand/hero.jpg" media="(max-width: 767px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/brand/hero-start.jpg" media="(min-width: 768px)" fetchpriority="high" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <!--

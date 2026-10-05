@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
-import { Logo } from './ui.jsx'
+import { Breadcrumbs, Logo } from './ui.jsx'
 import { Contact } from './Sections.jsx'
 import { MAILTO_CALL, STUDIES, WORK } from './content.js'
 import { navigate } from './router.js'
@@ -22,25 +22,23 @@ export default function CaseStudyPage({ item }) {
     document.title = `${item.client} — ${item.result} | The BizChemists`
   }, [item])
 
-  const backToWork = (e) => {
+  const go = (to) => (e) => {
     e.preventDefault()
-    navigate('/')
-    // the homepage mounts at the top; take them to the section they came from
-    requestAnimationFrame(() => {
-      document.querySelector('#portfolio')?.scrollIntoView({ block: 'start' })
-    })
+    navigate(to)
   }
+
+  const backToWork = go('/work/')
 
   return (
     <div className="bg-ink">
       <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-4 sm:px-8 md:px-12">
-          <a href="/" onClick={backToWork} className="press flex items-center gap-3">
+          <a href="/" onClick={go('/')} className="press flex items-center gap-3">
             <Logo withWordmark />
           </a>
           <div className="flex items-center gap-5">
             <a
-              href="/"
+              href="/work/"
               onClick={backToWork}
               className="press flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors duration-200 hover:text-accent"
             >
@@ -59,7 +57,10 @@ export default function CaseStudyPage({ item }) {
       </header>
 
       <main className="mx-auto max-w-[1400px] px-5 pb-24 pt-14 sm:px-8 md:px-12 md:pb-32 md:pt-20">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+        <Breadcrumbs
+          trail={[{ label: 'Home', href: '/' }, { label: 'Work', href: '/work/' }, { label: item.client }]}
+        />
+        <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
           {study?.industry ?? 'Selected work'}
         </p>
         <h1

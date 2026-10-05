@@ -369,7 +369,12 @@ export const VALUES = [
 export const FOOTER_LINKS = [
   {
     heading: 'Quick Links',
-    items: [...NAV.map((n) => ({ label: n.label, href: n.href })), { label: 'Questions', href: '#faq' }],
+    items: [
+      ...NAV.map((n) => ({ label: n.label, href: n.href })),
+      { label: 'All services', href: '/services/' },
+      { label: 'All work', href: '/work/' },
+      { label: 'Questions', href: '#faq' },
+    ],
   },
   {
     heading: 'Services',
@@ -856,3 +861,29 @@ export const SERVICE_PAGES = {
 export const SERVICE_LIST = SERVICES.map((s) => ({ ...SERVICE_PAGES[s.title], service: s }))
 
 export const servicePageOf = (slug) => SERVICE_LIST.find((p) => p.slug === slug)
+
+/* ------------------------------------------------------------- section hubs */
+
+/* /services/ and /work/ were 404s: the detail pages existed, the level above them did
+   not. A hub gives each set one crawlable parent, one place to link from, and the
+   middle step a breadcrumb needs. Both are generated from the lists above. */
+export const HUBS = {
+  services: {
+    slug: "services",
+    h1: "Marketing Services",
+    metaTitle: "Marketing Services in Bangladesh | The BizChemists",
+    metaDescription:
+      "Seven service lines from one Bangladesh agency: branding, video production, web design, influencer, digital marketing, social media and employer branding.",
+    lede: "Seven service lines, run by one team. Take one, or hand over the whole brand. Each page says what the work includes, who it is for, what it produced for other clients, and where it stops.",
+    closing: "Not sure which line the work belongs to? Describe it on a call and we will tell you, including when the answer is that you do not need us.",
+  },
+  work: {
+    slug: "work",
+    h1: "Selected Work",
+    metaTitle: "Marketing Case Studies from Bangladesh | The BizChemists",
+    metaDescription:
+      "Six campaigns and the numbers they produced: 3,000+ concert tickets, 250% restaurant sales growth, 180% follower growth, and a label launched on $25 of ad spend.",
+    lede: "Six projects, each listed with the result it produced rather than the adjective it deserved. Concerts, restaurants, fashion labels and remote content production, across Bangladesh and Malaysia.",
+    closing: "Every case study says what the brief was, what we did, and what changed. Where a project has no numbers worth quoting, it says that too.",
+  },
+}
